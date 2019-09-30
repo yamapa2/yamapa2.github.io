@@ -1,0 +1,118 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+function xchange2(bills) {
+	xch = [ [0, [], [[]]], [1, [1], [[1]]] ];
+	bi = 1;
+	for(amt = 2; amt < 100; ++amt) {
+		if(bi < bills.length && amt == bills[bi]) {
+			xch.push([1, [amt], [[amt]]]);
+			++bi;
+		} else {
+			xchp = [999, [], []];
+			for(bj = bi-1;  bj >= 0; --bj) {
+				amtp = amt - bills[bj];
+                d = xch[amtp][2][0];
+				if(d[0] <= bills[bj] && xchp[0] >= xch[amtp][0] ) {
+					xchp[0] = xch[amtp][0];
+					xchp[2].push([bills[bj]].concat(d));
+				}
+			}
+
+			++xchp[0];
+			for(var i = xchp[2].length-1; i >= 0; --i)
+				if(xchp[2][i].length > xchp[0]) xchp[2].splice(i, 1);
+			if(xchp[2].length > 1)
+				return null;
+			
+			xchp[1] = Array.from([...new Set(xchp[2][0])]);
+			xchp[1].sort(function(a, b){return a-b});
+			xch.push(xchp);
+        }
+    }
+    return xch;
+}
+
+function countEquals(xch) {
+	count = 0
+	for(i = 0; i < 100; ++ i) {
+		for(j = i+1; j < 100; ++j) {
+			if(xch[i][1].length == xch[j][1].length) {
+				for(k = 0; k < xch[i][1].length && xch[i][1][k] == xch[j][1][k]; ++k)
+					continue;
+				if(k == xch[i][1].length)
+					++count;
+			}
+		}
+	}
+	return count;
+}
+
+function repaint(billsStr) {
+	bills = billsStr.split(",").map(x => parseInt(x));
+	bills.sort(function(a, b){return a-b});
+	if(bills.length != 5 || bills[0] != 1) {
+		alert("Invalid Biils")
+		return;
+	}
+	xch = xchange2(bills);
+	if(xch == null) {
+		alert("Invalid Biils (non-unique exchanges)")
+		return;
+	}
+
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
+
+	colors = ([...Array(32).keys()]).map(x => x.toString());
+//	alert(colors);
+//	for (let i = colors.length - 1; i > 0; i--) {
+//        const j = Math.floor(Math.random() * (i + 1));
+//        [colors[i], colors[j]] = [colors[j], colors[i]];
+//    }
+//	alert(colors);
+	
+	function drawChart() {
+		var dataTable = [ ['ID', 'X', 'Y', 'c', 's'] ];
+		for(i = 0; i < 100; ++i) {
+			for(j = 0; j < 100; ++j) {
+				diff = xch[i][1].filter(x => !xch[j][1].includes(x)).concat(xch[j][1].filter(x => !xch[i][1].includes(x)));
+				c = 0;
+				for(b of diff)
+					c = c + Math.pow(2, bills.findIndex(x => x === b));
+				if(c != 0)
+					dataTable.push(['', i+0.5, j+0.5, colors[c], 1]);
+			}
+		}
+		var data = google.visualization.arrayToDataTable(dataTable);
+
+		var options = {
+			hAxis: { textPosition: 'none', gridlines: {count: 1} },
+			vAxis: { textPosition: 'none', gridlines: {count: 1} },
+			sizeAxis: {minValue: 0,  maxSize: 5},
+			tooltip: {trigger: 'none'},
+			legend: 'none'
+		};
+
+		var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+
+		chart.draw(data, options);
+	}
+
+	alert("Probability (in %): " + countEquals(xch)/49.5);
+}
+
+repaint("1, 5, 10, 20, 50");
+    </script>
+  </head>
+  <body>
+  	
+    <div id="chart_div" style="position: absolute; top: -280px; left: -280px; width: 1500px; height: 1500px;"></div>
+    <div id="input" style="position: absolute; top: 950px;">
+    	<form action="#">
+    		<input type="text" id="bills" name="bills"/><input type="Submit" value="Repaint" onclick="repaint(this.form.bills.value); return false;"/>
+    		</form>
+    </div>
+  </body>
+</html>

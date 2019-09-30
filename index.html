@@ -54,24 +54,18 @@ function repaint(billsStr) {
 	bills.sort(function(a, b){return a-b});
 	if(bills.length != 5 || bills[0] != 1) {
 		alert("Invalid Biils")
-		return;
+		return 0;
 	}
 	xch = xchange2(bills);
 	if(xch == null) {
 		alert("Invalid Biils (non-unique exchanges)")
-		return;
+		return 0;
 	}
 
 	google.charts.load('current', {'packages':['corechart']});
 	google.charts.setOnLoadCallback(drawChart);
 
 	colors = ([...Array(32).keys()]).map(x => x.toString());
-//	alert(colors);
-//	for (let i = colors.length - 1; i > 0; i--) {
-//        const j = Math.floor(Math.random() * (i + 1));
-//        [colors[i], colors[j]] = [colors[j], colors[i]];
-//    }
-//	alert(colors);
 	
 	function drawChart() {
 		var dataTable = [ ['ID', 'X', 'Y', 'c', 's'] ];
@@ -100,10 +94,31 @@ function repaint(billsStr) {
 		chart.draw(data, options);
 	}
 
-	alert("Probability (in %): " + countEquals(xch)/49.5);
+	return countEquals(xch)/49.5;
 }
 
-repaint("1, 5, 10, 20, 50");
+solns = [
+	[1, 2, 4, 8, 62], [1, 2, 4, 12, 66], [1, 2, 4, 17, 64], [1, 2, 4, 18, 64], [1, 2, 4, 23, 55], [1, 2, 4, 26, 61],
+	[1, 2, 4, 30, 48], [1, 2, 4, 31, 49], [1, 2, 4, 32, 50], [1, 2, 4, 35, 51], [1, 2, 4, 36, 47], [1, 2, 4, 36, 50],
+	[1, 2, 5, 15, 66], [1, 2, 5, 29, 61], [1, 2, 5, 29, 63], [1, 2, 5, 34, 45], [1, 2, 5, 34, 51], [1, 2, 5, 36, 50],
+	[1, 2, 6, 32, 52], [1, 2, 6, 38, 50], [1, 2, 7, 24, 66], [1, 2, 7, 29, 58], [1, 2, 7, 37, 49], [1, 2, 7, 37, 50],
+	[1, 2, 8, 30, 50], [1, 2, 9, 18, 62], [1, 2, 9, 35, 51], [1, 2, 10, 28, 51], [1, 2, 10, 32, 52], [1, 2, 11, 22, 58],
+	[1, 2, 11, 27, 65], [1, 2, 11, 38, 44], [1, 2, 14, 28, 48], [1, 2, 14, 29, 58], [1, 2, 15, 32, 64], [1, 2, 15, 38, 43],
+	[1, 2, 16, 28, 48], [1, 3, 6, 21, 67], [1, 3, 6, 36, 52], [1, 3, 10, 32, 73], [1, 3, 10, 37, 54], [1, 3, 15, 28, 58],
+	[1, 3, 20, 26, 40], [1, 4, 6, 30, 66], [1, 4, 6, 39, 55], [1, 4, 8, 16, 63], [1, 4, 15, 36, 59], [1, 4, 18, 28, 54],
+	[1, 5, 8, 34, 68], [1, 5, 10, 22, 71], [1, 5, 10, 27, 64], [1, 5, 10, 34, 50], [1, 5, 10, 37, 40], [1, 5, 16, 33, 62],
+	[1, 6, 12, 36, 38], [1, 8, 10, 16, 66], [1, 8, 17, 34, 40], [1, 9, 12, 18, 62], [1, 9, 14, 28, 43], [1, 9, 18, 23, 51],
+	[1, 9, 18, 34, 37], [1, 12, 17, 24, 34], [1, 13, 19, 26, 52]
+];
+
+csoln = 0;
+
+function move(dir) {
+	csoln += (dir ? 1 : -1);
+	return repaint(solns[csoln].toString());
+}
+
+repaint("1, 2, 4, 8, 62");
     </script>
   </head>
   <body>
@@ -111,8 +126,12 @@ repaint("1, 5, 10, 20, 50");
     <div id="chart_div" style="position: absolute; top: -280px; left: -280px; width: 1500px; height: 1500px;"></div>
     <div id="input" style="position: absolute; top: 950px;">
     	<form action="#">
-    		<input type="text" id="bills" name="bills"/><input type="Submit" value="Repaint" onclick="repaint(this.form.bills.value); return false;"/>
-    		</form>
+    		<input type="text" readonly id="prob" name="prob" value="4"/>
+    		<input type="Submit" id="next" value=">>" onclick="rv = move(true); if(rv > 0) this.form.prob.value = rv; this.form.bills.value = solns[csoln].toString(); return false;"/>
+    		<input type="Submit" id="prev" value="<<" onclick="rv = move(false); if(rv > 0) this.form.prob.value = rv; this.form.bills.value = solns[csoln].toString(); return false;"/>
+    		<input type="text" id="bills" name="bills" value="1, 2, 4, 8, 62"/>
+    		<input type="Submit" value="Repaint" onclick="rv = repaint(this.form.bills.value); if(rv > 0) this.form.prob.value = rv; return false;"/>
+    	</form>
     </div>
   </body>
 </html>

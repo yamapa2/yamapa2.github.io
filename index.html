@@ -20,11 +20,12 @@ function xchange2(bills) {
 				}
 			}
 
-			xchp[2] = xchp[2].filter(x => x.length >= xchp[0]);
+			++xchp[0];
+			for(var i = xchp[2].length-1; i >= 0; --i)
+				if(xchp[2][i].length > xchp[0]) xchp[2].splice(i, 1);
 			if(xchp[2].length > 1)
 				return null;
-			
-			++xchp[0];
+
 			xchp[1] = Array.from([...new Set(xchp[2][0])]);
 			xchp[1].sort(function(a, b){return a-b});
 			xch.push(xchp);

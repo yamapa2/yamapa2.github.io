@@ -53,12 +53,12 @@ function repaint(billsStr) {
 	bills = billsStr.split(",").map(x => parseInt(x));
 	bills.sort(function(a, b){return a-b});
 	if(bills.length != 5 || bills[0] != 1) {
-		alert("Invalid Biils")
+		alert("Invalid Biils, try another set with five bills and include 1")
 		return 0;
 	}
 	xch = xchange2(bills);
 	if(xch == null) {
-		alert("Invalid Biils (non-unique exchanges)")
+		alert("Invalid Biils (non-unique exchanges), try another set")
 		return 0;
 	}
 
@@ -112,10 +112,16 @@ solns = [
 ];
 
 csoln = 0;
-
-function move(dir) {
-	csoln += (dir ? 1 : -1);
-	return repaint(solns[csoln].toString());
+function submitForm(dir, f) {
+	if(dir === ">>" || dir === "<<") {
+		csoln = (solns.length + csoln + (dir === ">>" ? 1 : -1)) % solns.length;
+		rv = repaint(solns[csoln].toString());
+		if(rv > 0) f.prob.value = rv;
+		f.bills.value = solns[csoln].toString();
+	} else {
+		rv = repaint(f.bills.value);
+		if(rv > 0) f.prob.value = rv;
+	}
 }
 
 repaint("1, 2, 4, 8, 62");
@@ -126,11 +132,13 @@ repaint("1, 2, 4, 8, 62");
     <div id="chart_div" style="position: absolute; top: -280px; left: -280px; width: 1500px; height: 1500px;"></div>
     <div id="input" style="position: absolute; top: 950px;">
     	<form action="#">
-    		<input type="text" readonly id="prob" name="prob" value="4"/>
-    		<input type="Submit" id="next" value=">>" onclick="rv = move(true); if(rv > 0) this.form.prob.value = rv; this.form.bills.value = solns[csoln].toString(); return false;"/>
-    		<input type="Submit" id="prev" value="<<" onclick="rv = move(false); if(rv > 0) this.form.prob.value = rv; this.form.bills.value = solns[csoln].toString(); return false;"/>
+    		Solutions to <a href="https://www.research.ibm.com/haifa/ponderthis/challenges/September2019.html">Ponder This 2019 September challange</a>:
+    		<input type="Submit" id="next" value=">>" onclick="submitForm('>>', this.form); return false;"/>
+    		<input type="Submit" id="prev" value="<<" onclick="submitForm('<<', this.form); return false;"/>
+    		<input type="text" readonly id="prob" name="prob" value="4"/> <br/>
+    		Enter five distinct bills between 1 and 99, comma separated (ex: "1, 5, 10, 20, 50"): 
     		<input type="text" id="bills" name="bills" value="1, 2, 4, 8, 62"/>
-    		<input type="Submit" value="Repaint" onclick="rv = repaint(this.form.bills.value); if(rv > 0) this.form.prob.value = rv; return false;"/>
+    		<input type="Submit" value="Repaint" onclick="submitForm('', this.form); return false;"/>
     	</form>
     </div>
   </body>

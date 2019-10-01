@@ -20,12 +20,11 @@ function xchange2(bills) {
 				}
 			}
 
-			++xchp[0];
-			for(var i = xchp[2].length-1; i >= 0; --i)
-				if(xchp[2][i].length > xchp[0]) xchp[2].splice(i, 1);
+			xchp[2] = xchp[2].filter(x => x.length >= xchp[0]);
 			if(xchp[2].length > 1)
 				return null;
 			
+			++xchp[0];
 			xchp[1] = Array.from([...new Set(xchp[2][0])]);
 			xchp[1].sort(function(a, b){return a-b});
 			xch.push(xchp);
@@ -65,18 +64,22 @@ function repaint(billsStr) {
 	google.charts.load('current', {'packages':['corechart']});
 	google.charts.setOnLoadCallback(drawChart);
 
-	colors = ([...Array(32).keys()]).map(x => x.toString());
+//	colors = ([...Array(32).keys()]).map(x => x.toString());
 	
 	function drawChart() {
-		var dataTable = [ ['ID', 'X', 'Y', 'c', 's'] ];
+		var dataTable = [ ['ID', 'Alice', 'Bob', 'Symmetrical Difference'] ];
 		for(i = 0; i < 100; ++i) {
 			for(j = 0; j < 100; ++j) {
 				diff = xch[i][1].filter(x => !xch[j][1].includes(x)).concat(xch[j][1].filter(x => !xch[i][1].includes(x)));
-				c = 0;
-				for(b of diff)
-					c = c + Math.pow(2, bills.findIndex(x => x === b));
-				if(c != 0)
-					dataTable.push(['', i+0.5, j+0.5, colors[c], 1]);
+//				c = 0;
+//				for(b of diff)
+//					c = c + Math.pow(2, bills.findIndex(x => x === b));
+//				if(c != 0)
+//					dataTable.push(['', i+0.5, j+0.5, colors[c], 1]);
+				if(diff.length > 0) {
+					diff.sort(function(a, b){return a-b});
+					dataTable.push(['', i, j, diff.toString()]);
+				}
 			}
 		}
 		var data = google.visualization.arrayToDataTable(dataTable);
@@ -85,7 +88,7 @@ function repaint(billsStr) {
 			hAxis: { textPosition: 'none', gridlines: {count: 1} },
 			vAxis: { textPosition: 'none', gridlines: {count: 1} },
 			sizeAxis: {minValue: 0,  maxSize: 5},
-			tooltip: {trigger: 'none'},
+//			tooltip: {trigger: 'none'},
 			legend: 'none'
 		};
 
@@ -114,12 +117,17 @@ solns = [
 csoln = 0;
 function submitForm(dir, f) {
 	if(dir === ">>" || dir === "<<") {
-		csoln = (solns.length + csoln + (dir === ">>" ? 1 : -1)) % solns.length;
+		csoln += (dir === ">>" ? 1 : -1);
+		if(csoln >= solns.length) csoln -= solns.length;
+		if(csoln < 0) csoln += solns.length;
+
 		rv = repaint(solns[csoln].toString());
+		
 		if(rv > 0) f.prob.value = rv;
 		f.bills.value = solns[csoln].toString();
 	} else {
 		rv = repaint(f.bills.value);
+		
 		if(rv > 0) f.prob.value = rv;
 	}
 }

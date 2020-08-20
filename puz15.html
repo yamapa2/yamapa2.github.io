@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <script src="board.js"></script>
+        <script src="view.js"></script>
+        <style>
+            .tile {
+                position: absolute;
+                box-shadow: 0 4px 8px 0 #afafaf;
+                transition: 0.3s;
+                width: 100px;
+                height: 100px;
+                font-size: 60px;
+                text-align: center;
+                vertical-align: middle;
+                line-height: 1.75;
+                display: inline-block;
+            }
+
+            .tile:hover {
+                box-shadow: 0 8px 16px 0 #3f3f3f;
+            }        
+        </style>
+    </head>
+    <body>
+        <form>
+            <input type="text" name="speed" value="300" size="5"></input>
+            <input type="button" onclick="tv.setSpeed(parseInt(this.form.speed.value))" value="Set Speed"></input>
+            <input type="text" name="sizex" size="1" value="4"></input>
+            <input type="text" name="sizey" size="1" value="4"></input>
+            <input type="button" onclick="tv.new(parseInt(this.form.sizex.value), parseInt(this.form.sizey.value))" value="New"></input>
+            <input type="button" onclick="tv.random()" value="Random"></input>
+            <input type="button" onclick="tv.shuffle()" value="Shuffle"></input>
+            <input type="button" onclick="tv.solve()" value="Solve"></input>
+            <br/><br/><br/>
+         </form>
+        <div id="board" class="table">
+        </div>
+     </body>
+     <script>
+         tv.new(4, 4);
+     </script>
+</html>

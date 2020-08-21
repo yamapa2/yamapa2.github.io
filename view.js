@@ -70,7 +70,7 @@ View = function(size, board) {
                 else if(displayParams.backgroundColors != undefined && displayParams.backgroundColors != null) {
                     //  Background color tranisiton is provided, paint the tiles by color scaled by the tile value
                     tile.style.background = 'none';
-                    
+
                     let scale = (board.getTileValue(i, j)-1)/(size.cx*size.cy-1)
                     let bgcolor = "#"
                     for(let i = 0; i < 3; ++i) {
@@ -181,6 +181,7 @@ View = function(size, board) {
 
 var tv = new View({cx: 4, cy: 4});
 
+//  Toggle the settings box
 function toggle(div) {
     if(div.innerHTML == "x") {
         document.getElementById("settingsDetails").style.display = "none";
@@ -193,17 +194,18 @@ function toggle(div) {
         div.innerHTML =  "x";
     }
 }
+
+//  Update view settings, creates a new board if the board dimensions are changed
+//  Returns true if a new board is created
 function updateSettings(form) {
-    let params = {
+    tv.updateSettings({
         tileWidth: parseInt(form.tiley.value.trim()),
         tileHeight: parseInt(form.tilex.value.trim()),
         moveSpeed: parseInt(form.speed.value.trim()),
         hideTileValues: form.hideNumbers.checked,
         backgroundColors: [ form.bgColor1.value.trim(), form.bgColor2.value.trim() ],
         backgroundImage: form.bgImage.value.trim()
-    }
-
-    tv.updateSettings(params);
+    });
 
     let dim = { cx: parseInt(form.sizex.value.trim()), cy: parseInt(form.sizey.value.trim()) };
     let currentDim = tv.getSize();
@@ -213,26 +215,24 @@ function updateSettings(form) {
     return (dim.cx != currentDim.cx || dim.cy != currentDim.cy);
 }
 
+//  Form action handler, updates settings before any action is taken
 function act(btn) {
+    let nb = updateSettings(btn.form);
     if(btn.name == "update") {
-        updateSettings(btn.form);
         tv.display();
     }
     else if(btn.name == "new") {
-        let nb = updateSettings(btn.form);
         if(!nb) tv.new();
     }
     else if(btn.name == "random") {
-        let nb = updateSettings(btn.form);
         tv.random();
     }
     else if(btn.name == "shuffle") {
-        let nb = updateSettings(btn.form);
         tv.shuffle();
     }
     else if(btn.name == "solve") {
-        let nb = updateSettings(btn.form);
         tv.solve();
     }
+
     toggle(document.getElementById("settingsShow"))
 }

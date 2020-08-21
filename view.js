@@ -178,13 +178,10 @@ function updateSettings(form) {
         tileWidth: parseInt(form.tiley.value.trim()),
         tileHeight: parseInt(form.tilex.value.trim()),
         moveSpeed: parseInt(form.speed.value.trim()),
-        hideTileValues: form.hideNumbers.checked
+        hideTileValues: form.hideNumbers.checked,
+        backgroundColors = [ form.bgColor1.value.trim(), form.bgColor2.value.trim() ],
+        backgroundImage = form.bgImage.value.trim()
     }
-
-    if(form.bgColor1.value.trim().length == 7 && form.bgColor2.value.trim().length == 7 )
-        params.backgroundColors = [ form.bgColor1.value.trim(), form.bgColor2.value.trim() ];
-    if(form.bgImage.value.trim().length > 0)
-        params.backgroundImage = form.bgImage.value.trim();
 
     tv.updateSettings(params);
 

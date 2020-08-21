@@ -167,11 +167,19 @@ View = function(size, board) {
     }
 }
 
-var tv = new View();
+var tv = new View({cx: 4, cy: 4});
 
 function toggle(div) {
-    document.getElementById("settingsDetails").style.display = (div.innerHTML == "x") ? "none" : "block"
-    div.innerHTML = (div.innerHTML == "x") ? "+" : "x"
+    if(div.innerHTML == "x") {
+        document.getElementById("settingsDetails").style.display = "none";
+        document.getElementById("board").style.display = "block";
+        div.innerHTML =  "+";
+    }
+    else {
+        document.getElementById("settingsDetails").style.display = "block";
+        document.getElementById("board").style.display = "none";
+        div.innerHTML =  "x";
+    }
 }
 function updateSettings(form) {
     let params = {

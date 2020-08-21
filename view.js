@@ -43,6 +43,7 @@ View = function(size, board) {
     
     //  Update the content of each DIV card (representing a tile) with the corresponding value from the assoiciated board
     this.display = function() {
+        //console.log([displayParams, displayParams.backgroundImage.length])
         for(let i = 0; i < size.cx; ++i) {
             for(let j = 0; j < size.cy; ++j) {
                 let tile = document.getElementById(board.getTileValue(i, j).toString());
@@ -57,6 +58,8 @@ View = function(size, board) {
 
                 if(displayParams.backgroundImage != undefined && displayParams.backgroundImage != null && displayParams.backgroundImage.length > 0) {
                     //  A background image is provided, paint the tiles with image
+                    tile.style.background = 'none';
+
                     let posx = Math.floor((board.getTileValue(i, j)-1) / size.cy);
                     let posy = (board.getTileValue(i, j)-1) % size.cy;
 
@@ -66,6 +69,8 @@ View = function(size, board) {
                 }
                 else if(displayParams.backgroundColors != undefined && displayParams.backgroundColors != null) {
                     //  Background color tranisiton is provided, paint the tiles by color scaled by the tile value
+                    tile.style.background = 'none';
+                    
                     let scale = (board.getTileValue(i, j)-1)/(size.cx*size.cy-1)
                     let bgcolor = "#"
                     for(let i = 0; i < 3; ++i) {
@@ -164,6 +169,13 @@ View = function(size, board) {
     this.updateSettings = function(params) {
         for(pname in params)
             displayParams[pname] = params[pname];
+    }
+
+    this.getSettings = function() {
+        let params = {}
+        for(pname in displayParams)
+            params[pname] = displayParams[pname];
+        return params;
     }
 }
 

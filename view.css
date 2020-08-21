@@ -1,0 +1,32 @@
+.tile {
+    position: absolute;
+    box-shadow: 0 4px 8px 0 #afafaf;
+    transition: 0.3s;
+    width: 100px;
+    height: 100px;
+    font-size: 60px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.75;
+    display: inline-block;
+    z-index: -1;
+}
+
+.tile:hover {
+    box-shadow: 0 8px 16px 0 #3f3f3f;
+}
+
+#settingsShow {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+#settingsDetails {
+    display: none;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 #afafaf;
+    width: 500px;
+    transition: 0.3s;
+}
+
+label { display: block; width: 300px; }

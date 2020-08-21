@@ -1,12 +1,15 @@
 View = function(size, board) {
     let displayParams = {
-        left: 60,
-        top: 60,
+        left: 50,
+        top: 50,
         tileWidth: 100,
         tileHeight: 100,
         padWidth: 5,
         padHeight: 5,
-        moveSpeed: 300
+        moveSpeed: 300,
+        hideTileValues: true,
+        backgroundColors: [ "#ffff00", "#00ffff" ],
+        backgroundImage: "https://wallpapercave.com/wp/wp4637628.jpg"
     }
 
     //  Initialize the board view, create grid view with DIV cards
@@ -22,6 +25,20 @@ View = function(size, board) {
             innerHTML += "</div>";
         }
         document.getElementById("board").innerHTML = innerHTML;
+
+        //  If an image background is provided, scale the image to fit to the puzzle board
+        if(displayParams.backgroundImage != undefined && displayParams.backgroundImage != null) {
+            let img = new Image();
+            img.src = displayParams.backgroundImage;
+            
+            let wScale = size.cy * displayParams.tileWidth / img.width;
+            let hScale = size.cx * displayParams.tileHeight / img.height;
+
+            if(wScale < hScale)
+                displayParams.backgroundSize = `auto ${size.cx * displayParams.tileHeight}px`;
+            else
+                displayParams.backgroundSize = `${size.cy * displayParams.tileWidth}px auto`;
+        }
     }
     
     //  Update the content of each DIV card (representing a tile) with the corresponding value from the assoiciated board
@@ -33,11 +50,36 @@ View = function(size, board) {
                     continue;
 
                 //  Set tile width, height and position of each DIV card
-                tile.innerHTML = board.getTileValue(i, j);
                 tile.style.width = `${displayParams.tileWidth}px`;
                 tile.style.height = `${displayParams.tileHeight}px`;
                 tile.style.top = `${displayParams.top + i*(displayParams.tileHeight + displayParams.padHeight)}px`;
                 tile.style.left = `${displayParams.left + j*(displayParams.tileWidth + displayParams.padWidth)}px`;
+
+                if(displayParams.backgroundImage != undefined && displayParams.backgroundImage != null) {
+                    //  A background image is provided, paint the tiles with image
+                    let posx = Math.floor((board.getTileValue(i, j)-1) / size.cy);
+                    let posy = (board.getTileValue(i, j)-1) % size.cy;
+
+                    tile.style.backgroundImage = `url(${displayParams.backgroundImage})`;
+                    tile.style.backgroundPosition = `-${posy * displayParams.tileWidth}px -${posx * displayParams.tileHeight}px`;
+                    tile.style.backgroundSize = displayParams.backgroundSize;
+                }
+                else if(displayParams.backgroundColors != undefined && displayParams.backgroundColors != null) {
+                    //  Background color tranisiton is provided, paint the tiles by color scaled by the tile value
+                    let scale = (board.getTileValue(i, j)-1)/(size.cx*size.cy-1)
+                    let bgcolor = "#"
+                    for(let i = 0; i < 3; ++i) {
+                        let c1 = parseInt("0x"+displayParams.backgroundColors[0].substring(1+2*i, 3+2*i))
+                        let c2 = parseInt("0x"+displayParams.backgroundColors[1].substring(1+2*i, 3+2*i))
+
+                        let cc = Math.max(0, Math.min(0xff, Math.floor(c1 + (c2 - c1)*scale)));
+                        bgcolor += ((cc < 16) ? "0" : "") + cc.toString(16);
+                    }
+                    tile.style.backgroundColor = bgcolor;
+                }
+
+                //  Set tile value only if hideTileValue is set to false
+                tile.innerHTML = displayParams.hideTileValues ? " ": board.getTileValue(i, j);
             }
         }
     }
@@ -59,7 +101,7 @@ View = function(size, board) {
 
     //  Sets up a new puzzle board with given rows and columns
     this.new = function(rows, cols) {
-        size = { cx: rows, cy: cols};
+        size = (rows != null) ? { cx: rows, cy: cols} : board.getSize();
         board = new Board(size);
         
         //  Do not forget to reinitialize the view, board dimensions might have changed, and so is the board HTML
@@ -117,9 +159,62 @@ View = function(size, board) {
         this.replay(recorder);
     }
     
-    this.setSpeed = function(sp) {
-        displayParams.moveSpeed = sp;
+    this.getSize = () => board.getSize();
+
+    this.updateSettings = function(params) {
+        for(pname in params)
+            displayParams[pname] = params[pname];
     }
 }
 
 var tv = new View();
+
+function toggle(div) {
+    document.getElementById("settingsDetails").style.display = (div.innerHTML == "x") ? "none" : "block"
+    div.innerHTML = (div.innerHTML == "x") ? "+" : "x"
+}
+function updateSettings(form) {
+    let params = {
+        tileWidth: parseInt(form.tiley.value.trim()),
+        tileHeight: parseInt(form.tilex.value.trim()),
+        moveSpeed: parseInt(form.speed.value.trim()),
+        hideTileValues: form.hideNumbers.checked
+    }
+
+    if(form.bgColor1.value.trim().length == 7 && form.bgColor2.value.trim().length == 7 )
+        params.backgroundColors = [ form.bgColor1.value.trim(), form.bgColor2.value.trim() ];
+    if(form.bgImage.value.trim().length > 0)
+        params.backgroundImage = form.bgImage.value.trim();
+
+    tv.updateSettings(params);
+
+    let dim = { cx: parseInt(form.sizex.value.trim()), cy: parseInt(form.sizey.value.trim()) };
+    let currentDim = tv.getSize();
+    if(dim.cx != currentDim.cx || dim.cy != currentDim.cy)
+        tv.new(dim.cx, dim.cy);
+
+    return (dim.cx != currentDim.cx || dim.cy != currentDim.cy);
+}
+
+function act(btn) {
+    if(btn.name == "update") {
+        updateSettings(btn.form);
+    }
+    else if(btn.name == "new") {
+        let nb = updateSettings(btn.form);
+        if(!nb) tv.new();
+    }
+    else if(btn.name == "random") {
+        let nb = updateSettings(btn.form);
+        tv.random();
+    }
+    else if(btn.name == "shuffle") {
+        let nb = updateSettings(btn.form);
+        tv.shuffle();
+    }
+    else if(btn.name == "solve") {
+        let nb = updateSettings(btn.form);
+        tv.solve();
+    }
+    toggle(document.getElementById("settingsShow"))
+}

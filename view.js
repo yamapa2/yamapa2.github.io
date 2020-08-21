@@ -55,7 +55,7 @@ View = function(size, board) {
                 tile.style.top = `${displayParams.top + i*(displayParams.tileHeight + displayParams.padHeight)}px`;
                 tile.style.left = `${displayParams.left + j*(displayParams.tileWidth + displayParams.padWidth)}px`;
 
-                if(displayParams.backgroundImage != undefined && displayParams.backgroundImage != null) {
+                if(displayParams.backgroundImage != undefined && displayParams.backgroundImage != null && displayParams.backgroundImage.length > 0) {
                     //  A background image is provided, paint the tiles with image
                     let posx = Math.floor((board.getTileValue(i, j)-1) / size.cy);
                     let posy = (board.getTileValue(i, j)-1) % size.cy;
@@ -179,8 +179,8 @@ function updateSettings(form) {
         tileHeight: parseInt(form.tilex.value.trim()),
         moveSpeed: parseInt(form.speed.value.trim()),
         hideTileValues: form.hideNumbers.checked,
-        backgroundColors = [ form.bgColor1.value.trim(), form.bgColor2.value.trim() ],
-        backgroundImage = form.bgImage.value.trim()
+        backgroundColors: [ form.bgColor1.value.trim(), form.bgColor2.value.trim() ],
+        backgroundImage: form.bgImage.value.trim()
     }
 
     tv.updateSettings(params);
@@ -196,6 +196,7 @@ function updateSettings(form) {
 function act(btn) {
     if(btn.name == "update") {
         updateSettings(btn.form);
+        tv.display();
     }
     else if(btn.name == "new") {
         let nb = updateSettings(btn.form);

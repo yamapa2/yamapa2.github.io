@@ -25,11 +25,11 @@ class Grid {
 	}
 
 	turnL() {
-		this.dir = (this.dir[1] == 0 ? [this.dir[1], this.dir[1]-this.dir[0]] : [this.dir[1]-this.dir[0], this.dir[0]]);
+		this.dir = (this.dir[1] == 0 ? [0, -this.dir[0]] : [this.dir[1], 0]);
 	}
 
 	turnR() {
-		this.dir = (this.dir[1] == 0 ? [this.dir[1], this.dir[0]-this.dir[1]] : [this.dir[0]-this.dir[1], this.dir[0]]);
+		this.dir = (this.dir[1] == 0 ? [0, this.dir[0]] : [-this.dir[1], 0]);
 	}
 
 	next() {

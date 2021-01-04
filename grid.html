@@ -141,7 +141,7 @@ function paint(N, bees, animate=true) {
 			timer = setTimeout(nextStep, speed);
 	}
 
-	nextStep();
+	timer = setTimeout(nextStep, 1)
 }
 
 var speed = 1;

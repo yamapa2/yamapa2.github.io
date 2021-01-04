@@ -153,6 +153,7 @@ function setSpeed(dir, f) {
 }
 
 function animateRobot(f) {
+	clearTimeout(timer);
 	paint(parseInt(f.N.value), JSON.parse("["+f.bees.value+"]"));
 }
 

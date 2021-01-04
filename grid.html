@@ -132,13 +132,14 @@ function paint(N, bees, animate=true) {
 		ctx.fillRect(oldPos[0]*cw, oldPos[1]*ch, cw-cm, ch-cm);
 
 		if(nextResult)
-			setTimeout(nextStep, speed)
+			timer = setTimeout(nextStep, speed);
 	}
 
 	nextStep();
 }
 
 var speed = 1;
+var timer = null;
 function setSpeed(dir, f) {
 	if(dir[0] === "<")
 		speed = speed - 10**(dir.length-1);
@@ -152,10 +153,11 @@ function setSpeed(dir, f) {
 }
 
 function animateRobot(f) {
-	paint(parseInt(f.N.value), JSON.parse("["+f.bees.value+"]"))
+	paint(parseInt(f.N.value), JSON.parse("["+f.bees.value+"]"));
 }
 
 function compute(f) {
+	clearTimeout(timer);
 	let N = parseInt(f.N.value);
 	let B = parseInt(f.B.value);
 	let bees = [];
@@ -172,6 +174,7 @@ function compute(f) {
 }
 
 function displayRobot(f) {
+	clearTimeout(timer);
 	paint(parseInt(f.N.value), JSON.parse("["+f.bees.value+"]"), false)
 }
 

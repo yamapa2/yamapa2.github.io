@@ -113,7 +113,7 @@ function paint(N, bees, animate=true) {
 
 	var cw = canvas.width/N;
 	var ch = canvas.height/N;
-	var cm = (cw > 10 && ch > 2) ? 2 : 1;
+	var cm = (cw > 10 && ch > 10) ? 2 : 1;
 
 	var colors = ['white', 'orange', 'red', 'green', 'black']
 	for(let x = 0; x < g.N; ++x) {

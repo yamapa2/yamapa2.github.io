@@ -98,6 +98,9 @@ function findBees(N, depth, bees, gs) {
 }
 
 function paint(N, bees, animate=true) {
+	clearTimeout(timer);
+	timer = null;
+
 	var g = new Grid(N, bees)
 
 	if(!animate) {
@@ -122,6 +125,9 @@ function paint(N, bees, animate=true) {
 	}
 
 	function nextStep() {
+		if(timer == null)
+			return;
+		
 		let oldPos = [ g.pos[0], g.pos[1] ];
 		let nextResult = g.next();
 
@@ -153,12 +159,13 @@ function setSpeed(dir, f) {
 }
 
 function animateRobot(f) {
-	clearTimeout(timer);
 	paint(parseInt(f.N.value), JSON.parse("["+f.bees.value+"]"));
 }
 
 function compute(f) {
 	clearTimeout(timer);
+	timer = null;
+	
 	let N = parseInt(f.N.value);
 	let B = parseInt(f.B.value);
 	let bees = [];
@@ -175,7 +182,6 @@ function compute(f) {
 }
 
 function displayRobot(f) {
-	clearTimeout(timer);
 	paint(parseInt(f.N.value), JSON.parse("["+f.bees.value+"]"), false)
 }
 

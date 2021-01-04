@@ -117,7 +117,7 @@ function paint(N, bees, animate=true) {
 	for(let x = 0; x < g.N; ++x) {
 		for(let y = 0; y < g.N; ++y) {
 			ctx.fillStyle = colors[g.grid[x][y]];
-			ctx.fillRect(x*cw, y*ch, cw-cm, ch-cm);
+			ctx.fillRect(y*ch, x*cw, ch-cm, cw-cm);
 		}
 	}
 
@@ -126,10 +126,10 @@ function paint(N, bees, animate=true) {
 		let nextResult = g.next();
 
 		ctx.fillStyle = colors[nextResult ? 4 : g.grid[g.pos[0]][g.pos[1]]];
-		ctx.fillRect(g.pos[0]*cw, g.pos[1]*ch, cw-cm, ch-cm);
+		ctx.fillRect(g.pos[1]*ch, g.pos[0]*cw, ch-cm, cw-cm);
 
 		ctx.fillStyle = colors[g.grid[oldPos[0]][oldPos[1]]];
-		ctx.fillRect(oldPos[0]*cw, oldPos[1]*ch, cw-cm, ch-cm);
+		ctx.fillRect(oldPos[1]*ch, oldPos[0]*cw, ch-cm, cw-cm);
 
 		if(nextResult)
 			timer = setTimeout(nextStep, speed);

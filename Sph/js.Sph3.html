@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Sph</title>
+<script src="Sph/corejs/sph.js"></script>
+<script src="Sph/corejs/Oid.js"></script>
+<script src="Sph/corejs/Cycloid.js"></script>
+<script src="Sph/corejs/Trochoid.js"></script>
+<script src="Sph/corejs/EpiTrochoid.js"></script>
+<script src="Sph/corejs/HypoTrochoid.js"></script>
+<script src="Sph/corejs/Ellipsloid.js"></script>
+<script src="Sph/corejs/Customoid.js"></script>
+<script src="Sph/corejs/Polyloid.js"></script>
+</head>
+<body>
+    <canvas id="canvas" height="700" width="800"></canvas>
+</body>
+<script language="javascript">
+    new Sph()
+	.addOid(HypoTrochoid, {
+        scale: 75,
+        locX: 400,
+        locY: 300,
+        a: 405,
+        r: 85,
+        color: { r: 255, g: 0, b: 0 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 125,
+        locX: 400,
+        locY: 300,
+        a: 405,
+        r: 85,
+        color: { r: 255, g: 32, b: 32 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 180,
+        locX: 400,
+        locY: 300,
+        a: 405,
+        r: 85,
+        color: { r: 255, g: 64, b: 64 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 260,
+        locX: 400,
+        locY: 300,
+        a: 405,
+        r: 85,
+        color: { r: 255, g: 96, b: 96 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 350,
+        locX: 400,
+        locY: 300,
+        a: 405,
+        r: 85,
+        color: { r: 255, g: 128, b: 128 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 500,
+        locX: 400,
+        locY: 300,
+        a: 405,
+        r: 85,
+        color: { r: 255, g: 160, b: 160 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 650,
+        locX: 400,
+        locY: 300,
+        a: 405,
+        r: 85,
+        color: { r: 255, g: 192, b: 192 },
+        grad: true
+    })
+    .paint(document.querySelector('#canvas').getContext('2d'));
+</script>
+</html>

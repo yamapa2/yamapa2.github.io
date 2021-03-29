@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Sph</title>
+<script src="Sph/corejs/sph.js"></script>
+<script src="Sph/corejs/Oid.js"></script>
+<script src="Sph/corejs/Cycloid.js"></script>
+<script src="Sph/corejs/Trochoid.js"></script>
+<script src="Sph/corejs/EpiTrochoid.js"></script>
+<script src="Sph/corejs/HypoTrochoid.js"></script>
+<script src="Sph/corejs/Ellipsloid.js"></script>
+<script src="Sph/corejs/Customoid.js"></script>
+<script src="Sph/corejs/Polyloid.js"></script>
+</head>
+<body>
+    <canvas id="canvas" height="700" width="800"></canvas>
+</body>
+<script language="javascript">
+    new Sph()
+    .addOid(HypoTrochoid, {
+			scale: 100,
+			locX: 390,
+			locY: 200,
+			a: 900,
+			r: 460,
+			s: 385,
+            color: { r: 0, g: 0, b: 255 },
+    })
+    .addOid(Polyloid, {
+            color: { r: 0, g: 255, b: 0 },
+			scale: 200,
+			locX: 390,
+			locY: 200,
+			r: 200,
+			s: 150,
+			angle: -18,
+			bgcolor: { r: 255, g: 0, b: 0 },
+			steps: 5000,
+			grad: true,
+			a: 200,
+			b: 327,
+			d: 400,
+			vertices: 5
+    })
+    .paint(document.querySelector('#canvas').getContext('2d'));
+</script>
+</html>

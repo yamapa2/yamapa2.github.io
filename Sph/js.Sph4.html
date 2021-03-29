@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Sph</title>
+<script src="Sph/corejs/sph.js"></script>
+<script src="Sph/corejs/Oid.js"></script>
+<script src="Sph/corejs/Cycloid.js"></script>
+<script src="Sph/corejs/Trochoid.js"></script>
+<script src="Sph/corejs/EpiTrochoid.js"></script>
+<script src="Sph/corejs/HypoTrochoid.js"></script>
+<script src="Sph/corejs/Ellipsloid.js"></script>
+<script src="Sph/corejs/Customoid.js"></script>
+<script src="Sph/corejs/Polyloid.js"></script>
+</head>
+<body>
+    <canvas id="canvas" height="700" width="800"></canvas>
+</body>
+<script language="javascript">
+    new Sph()
+    .addOid(HypoTrochoid, {
+        scale: 225,
+        locX: 112,
+        locY: 75,
+        a: 243,
+        r: 108,
+        s: 124,
+        color: { r: 255, g: 0, b: 0 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 225,
+        locX: 112,
+        locY: 525,
+        a: 243,
+        r: 108,
+        s: 124,
+        color: { r: 255, g: 0, b: 0 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 225,
+        locX: 688,
+        locY: 525,
+        a: 243,
+        r: 108,
+        s: 124,
+        color: { r: 255, g: 0, b: 0 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 225,
+        locX: 688,
+        locY: 75,
+        a: 243,
+        r: 108,
+        s: 124,
+        color: { r: 255, g: 0, b: 0 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 25,
+        locX: 400,
+        locY: 300,
+        a: 405,
+        r: 85,
+        color: { r: 255, g: 192, b: 0 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 75,
+        locX: 400,
+        locY: 300,
+        a: 405,
+        r: 85,
+        color: { r: 255, g: 192, b: 0 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 125,
+        locX: 400,
+        locY: 300,
+        a: 405,
+        r: 85,
+        color: { r: 128, g: 128, b: 128 },
+        grad: true
+    })
+    .addOid(EpiTrochoid, {
+        scale: 225,
+        locX: 400,
+        locY: 300,
+        a: 405,
+        r: 285,
+        color: { r: 0, g: 255, b: 0 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 100,
+        locX: 256,
+        locY: 200,
+        a: 425,
+        r: 35,
+        s: 285,
+        color: { r: 255, g: 0, b: 255 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 100,
+        locX: 256,
+        locY: 400,
+        a: 425,
+        r: 35,
+        s: 285,
+        color: { r: 255, g: 0, b: 255 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 100,
+        locX: 550,
+        locY: 200,
+        a: 425,
+        r: 35,
+        s: 285,
+        color: { r: 255, g: 0, b: 255 },
+        grad: true
+    })
+    .addOid(HypoTrochoid, {
+        scale: 100,
+        locX: 550,
+        locY: 400,
+        a: 425,
+        r: 35,
+        s: 285,
+        color: { r: 255, g: 0, b: 255 },
+        grad: true
+    })
+    .paint(document.querySelector('#canvas').getContext('2d'));
+</script>
+</html>

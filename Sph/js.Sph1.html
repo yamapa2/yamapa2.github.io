@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Sph</title>
+<script src="Sph/corejs/sph.js"></script>
+<script src="Sph/corejs/Oid.js"></script>
+<script src="Sph/corejs/Cycloid.js"></script>
+<script src="Sph/corejs/Trochoid.js"></script>
+<script src="Sph/corejs/EpiTrochoid.js"></script>
+<script src="Sph/corejs/HypoTrochoid.js"></script>
+<script src="Sph/corejs/Ellipsloid.js"></script>
+<script src="Sph/corejs/Customoid.js"></script>
+<script src="Sph/corejs/Polyloid.js"></script>
+</head>
+<body>
+    <canvas id="canvas" height="700" width="800"></canvas>
+</body>
+<script language="javascript">
+    new Sph().loadOids([
+        {
+            type: EpiTrochoid,
+            scale: 200,
+            locX: 390,
+            locY: 200,
+            a: 900,
+            r: 460,
+            s: 385,
+            slip: 23.0,
+            color: { r: 0, g: 0, b: 255 }
+        },
+        {
+            type: HypoTrochoid,
+            scale: 110,
+            locX: 390,
+            locY: 200,
+            a: 900,
+            r: 460,
+            s: 385,
+            slip: 23.0,
+            color: { r: 255, g: 0, b: 0 },
+            bgcolor: { r: 0, g: 0, b: 255 },
+            grad: true
+        },
+        {
+            type: Cycloid,
+            scale: 400,
+            locX: 50,
+            locY: 200,
+            length: 200,
+            r: 10,
+            s: 20,
+            slip: 2.0,
+            color: { r: 255, g: 0, b: 0 },
+            angle: 90,
+            bRight: false
+        },
+        {
+            type: Cycloid,
+            scale: 400,
+            locX: 110,
+            locY: 200,
+            length: 200,
+            r: 10,
+            s: 20,
+            slip: 2.0,
+            color: { r: 255, g: 0, b: 0 },
+            angle: 90,
+            bRight: true
+        },
+        {
+            type: Cycloid,
+            scale: 400,
+            locX: 670,
+            locY: 200,
+            length: 200,
+            r: 10,
+            s: 20,
+            slip: 2.0,
+            color: { r: 255, g: 0, b: 0 },
+            angle: 90,
+            bRight: false
+        },
+        {
+            type: Cycloid,
+            scale: 400,
+            locX: 730,
+            locY: 200,
+            length: 200,
+            r: 10,
+            s: 20,
+            slip: 2.0,
+            color: { r: 255, g: 0, b: 0 },
+            angle: 90,
+            bRight: true
+        }
+    ])
+    .paint(document.querySelector('#canvas').getContext('2d'));
+
+    //sph.highlight(g, 0);
+
+    //setTimeout(function() { 
+    //    g.clearRect(0, 0, canvas.width, canvas.height);
+    //    sph.paint(g)
+    //}, 2000);
+</script>
+</html>

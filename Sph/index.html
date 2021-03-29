@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Sph</title>
+<link rel="stylesheet" href="css/main.css"></link>
+<script src="scripts/core/sph.js"></script>
+<script src="scripts/core/Oid.js"></script>
+<script src="scripts/core/Cycloid.js"></script>
+<script src="scripts/core/Trochoid.js"></script>
+<script src="scripts/core/EpiTrochoid.js"></script>
+<script src="scripts/core/HypoTrochoid.js"></script>
+<script src="scripts/core/Ellipsloid.js"></script>
+<script src="scripts/core/Customoid.js"></script>
+<script src="scripts/core/Polyloid.js"></script>
+<script src="scripts/ui/main.js"></script>
+</head>
+
+<body>
+    <div class="canvas-card" id="canvasdiv">
+        <div id="canvasdiv1" style="position:absolute; top:0px; left:0px;">
+            <canvas id="canvas1" height="700" width="1000"></canvas>
+        </div>
+    </div>
+    <div class="json-card" id="jsondiv">
+        <form style="text-align: center;" method="POST">
+            <textarea class="json-textarea" id="jsonoids" name="oids"></textarea>
+            <button name="load" onclick="javascript:onLoadPressed(this); return false;">Load</button>
+        </form>
+    </div>
+    <div class="config-card">
+        <form id="oidForm" method="POST">
+            <div class="config-table">
+                <div class="config-row">
+                    <div class="config-col-field">
+                        <label for="oidid">id:</label>
+                    </div>
+                    <div class="config-col-widget">
+                        <select id="oididselect" name="id" onchange="javascript:onOidIdChanged(this.value)">
+                            <option id="oidid1" value="1">1</option>
+                        </select>
+                        <button class="config-button" name="add" onclick="javascript:onAddPressed(this); return false;" width="10">Add</button>
+                        <button class="config-button" name="delete" onclick="javascript:onCopyPressed(this); return false;">Cpy</button>
+                        <button class="config-button" name="copy" onclick="javascript:onDeletePressed(this); return false;">Del</button>
+                    </div>
+                    <div class="config-col-value">
+                        <button class="config-button" name="config" onclick="javascript:onJsonPressed(this); return false;">json</button>
+                    </div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="type">type:</label></div>
+                    <div class="config-col-widget">
+                        <select name="type" onchange="javascript:onOidTypeChanged(this.value)">
+                            <option value="Cycloid">Cycloid</option>
+                            <option value="EpiTrochoid">EpiTrochoid</option>
+                            <option value="HypoTrochoid">HypoTrochoid</option>
+                            <option value="Ellipsloid">Ellipsloid</option>
+                            <option value="Polyloid">Polyloid</option>
+                        </select>
+                    </div>
+                    <div class="config-col-value"></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="locX">locX:</label></div>
+                    <div class="config-col-widget"><input type="range" name="locX" min="0" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="locX.value"></label></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="locY">locY:</label></div>
+                    <div class="config-col-widget"><input type="range" name="locY" min="0" max="700" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="locY.value"></label></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="scale">scale:</label></div>
+                    <div class="config-col-widget"><input type="range" name="scale" min="1" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="scale.value"></label></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="angle">angle:</label></div>
+                    <div class="config-col-widget"><input type="range" name="angle" min="0" max="360" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="angle.value"></label></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="r">r:</label></div>
+                    <div class="config-col-widget"><input type="range" name="r" min="1" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="r.value"></label></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="s">s:</label></div>
+                    <div class="config-col-widget"><input type="range" name="s" min="1" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="s.value"></label></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="slip">slip:</label></div>
+                    <div class="config-col-widget"><input type="range" name="slip" min="1" max="10" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="slip.value"></label></div>
+                </div>
+                <div id="acell" class="config-row">
+                    <div class="config-col-field"><label for="a">a:</label></div>
+                    <div class="config-col-widget"><input type="range" name="a" min="1" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="a.value"></label></div>
+                </div>
+                <div id="bcell" class="config-row">
+                    <div class="config-col-field"><label for="b">b:</label></div>
+                    <div class="config-col-widget"><input type="range" name="b" min="1" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="b.value"></label></div>
+                </div>
+                <div id="dcell" class="config-row">
+                    <div class="config-col-field"><label for="d">d:</label></div>
+                    <div class="config-col-widget"><input type="range" name="d" min="1" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="d.value"></label></div>
+                </div>
+                <div id="lengthcell" class="config-row">
+                    <div class="config-col-field"><label for="length">length:</label></div>
+                    <div class="config-col-widget"><input type="range" name="length" min="1" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="length.value"></label></div>
+                </div>
+                <div id="verticescell" class="config-row">
+                    <div class="config-col-field"><label for="vertices">vertices:</label></div>
+                    <div class="config-col-widget"><input type="range" name="vertices" min="2" max="12" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="vertices.value"></label></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="color">color:</label></div>
+                    <div class="config-col-widget"><input type="color" name="color" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="bgcolor">bgcolor:</label></div>
+                    <div class="config-col-widget"><input type="color" name="bgcolor" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="grad">grad:</label></div>
+                    <div class="config-col-widget"><input type="checkbox" name="grad" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="delphi">delphi:</label></div>
+                    <div class="config-col-widget"><input type="range" name="delphi" min="1" max="360" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="delphi.value"></label></div>
+                </div>
+                <div class="config-row">
+                    <div class="config-col-field"><label for="steps">steps:</label></div>
+                    <div class="config-col-widget"><input type="range" name="steps" min="0" max="50000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-value"><label for="steps.value"></label></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script lang="javascript>">
+    onOidIdChanged(allOidConfigs[0].id);
+    updateCanvas(allOidConfigs[0])
+</script>
+</html>

@@ -1,0 +1,67 @@
+.config-table {
+    display: table;         
+    width: 310px;         
+    border-spacing: 5px;
+    padding-left: 10px;
+}
+.config-row {
+    display: table-row;
+    clear: both;
+    border-spacing: 5px;
+}
+.config-col-field {
+    float: left;
+    text-align: right;
+    display: table-column;         
+    width: 40px;         
+    border-spacing: 5px;
+    padding-right: 10px;
+}
+.config-col-widget {
+    float: left;
+    display: table-column;         
+    width: 200px;         
+    border-spacing: 5px;         
+}
+.config-col-value {
+    float: left;
+    display: table-column;         
+    width: 50px;         
+    border-spacing: 5px;         
+}
+.config-card {
+    box-shadow: 0 4px 8px 0 #afafaf;
+    vertical-align: middle;
+    line-height: 1.75;
+    display: inline-block;
+    position: absolute;
+    left: 1010px;
+    height: 720px;
+}
+.canvas-card {
+    box-shadow: 0 4px 8px 0 #afafaf;
+    vertical-align: middle;
+    line-height: 1.75;
+    display: inline-block;
+    width: 1000px;
+    height: 720px;
+}
+.json-card {
+    box-shadow: 0 4px 8px 0 #afafaf;
+    vertical-align: middle;
+    line-height: 1.75;
+    display: none;
+    width: 1000px;
+    height: 720px;
+    overflow: scroll;
+}
+input[type="range"] {
+    width:180px;
+}
+.config-button { 
+    width:45px; 
+}
+.json-textarea {
+    width: 1000px;
+    height: 650px;
+}

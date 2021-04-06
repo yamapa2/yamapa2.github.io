@@ -52,7 +52,6 @@ input[type="range"] {
     width:45px; 
 }
 .json-textarea {
-    float: left;
-    width: 800px;
+    width: 1000px;
     height: 650px;
 }

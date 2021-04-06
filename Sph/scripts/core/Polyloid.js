@@ -151,4 +151,8 @@ class Polyloid extends Customoid {
 		//	Initialize the Customoid
 		super.initialize();
 	}
+    
+    _contains(pt) {
+        return false;
+    }
 }

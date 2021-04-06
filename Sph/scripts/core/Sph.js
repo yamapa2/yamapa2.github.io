@@ -3,15 +3,15 @@ class Sph {
         this.oids = []      //	Array of Oids
     }
 
-    loadOids(rawOids) {
-        for(let oid of rawOids) {
-            this.addOid(oid.type, oid);
+    loadOids(oidConfigs) {
+        for(let oidConfig of oidConfigs) {
+            this.addOid(oidConfig.type, oidConfig);
         }
         return this;
     }
 
-    addOid(oidClass, oid) {
-        oid = Object.assign(new oidClass, oid);
+    addOid(oidClass, oidConfig) {
+        let oid = Object.assign(new oidClass, oidConfig);
         oid.initialize();
         this.oids.push(oid);
         return this;
@@ -21,7 +21,7 @@ class Sph {
         //	Draw every Oid in the array sph
 		for(let oid of this.oids) {
             oid.reset();
-			oid.draw(g);
+            oid.draw(g);
         }
         return this;
     }
@@ -52,4 +52,12 @@ class Sph {
 
         repaint();
     }
-}
+
+	contains(pt) {
+		for(let oid of this.oids) {
+            if(oid.contains(pt))
+                return oid;
+        }
+        return null;
+    }
+ }

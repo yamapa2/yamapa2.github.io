@@ -1,0 +1,77 @@
+[
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.5,
+        "locX": 500,
+        "locY": 350,
+        "a": 405,
+        "r": 85,
+        "color": { "r": 255, "g": 0, "b": 0 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.5,
+        "locX": 500,
+        "locY": 350,
+        "a": 405,
+        "r": 85,
+        "color": { "r": 255, "g": 32, "b": 32 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.6,
+        "locX": 500,
+        "locY": 350,
+        "a": 405,
+        "r": 85,
+        "color": { "r": 255, "g": 64, "b": 64 }
+    }, 
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.7,
+        "locX": 500,
+        "locY": 350,
+        "a": 405,
+        "r": 85,
+        "color": { "r": 255, "g": 96, "b": 96 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.8,
+        "locX": 500,
+        "locY": 350,
+        "a": 405,
+        "r": 85,
+        "color": { "r": 255, "g": 128, "b": 128 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.9,
+        "locX": 500,
+        "locY": 350,
+        "a": 405,
+        "r": 85,
+        "color": { "r": 255, "g": 160, "b": 160 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "scale": 1,
+        "locX": 500,
+        "locY": 350,
+        "a": 405,
+        "r": 85,
+        "color": { "r": 255, "g": 192, "b": 192 }
+    },
+    {
+        "id": 8,
+        "type": "HypoTrochoid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 0.5,
+        "r": 20,
+        "s": 120,
+        "slip": 1,
+        "a": 126,
+        "color": { "r": 255, "g": 0, "b": 0 }
+    }
+]

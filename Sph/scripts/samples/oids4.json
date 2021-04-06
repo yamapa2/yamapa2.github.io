@@ -1,0 +1,98 @@
+[
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.5,
+        "locX": 200,
+        "locY": 150,
+        "a": 232,
+        "r": 108,
+        "s": 124,
+        "color":{ "r": 255, "g": 0, "b": 0 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.5,
+        "locX": 200,
+        "locY": 550,
+        "a": 232,
+        "r": 108,
+        "s": 124,
+        "color":{ "r": 255, "g": 0, "b": 0 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.5,
+        "locX": 800,
+        "locY": 150,
+        "a": 232,
+        "r": 108,
+        "s": 124,
+        "color":{ "r": 255, "g": 0, "b": 0 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.5,
+        "locX": 800,
+        "locY": 550,
+        "a": 232,
+        "r": 108,
+        "s": 124,
+        "color":{ "r": 255, "g": 0, "b": 0 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.5,
+        "locX": 500,
+        "locY": 350,
+        "a": 405,
+        "r": 85,
+        "color":{ "r": 255, "g": 148, "b": 0 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.3,
+        "locX": 500,
+        "locY": 350,
+        "a": 405,
+        "r": 85,
+        "color":{ "r": 0, "g": 148, "b": 255 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "scale": 0.7,
+        "locX": 500,
+        "locY": 350,
+        "a": 405,
+        "r": 85,
+        "color":{ "r": 128, "g": 128, "b": 128 }
+    },
+    {
+        "type": "EpiTrochoid",
+        "scale": 0.8,
+        "locX": 500,
+        "locY": 350,
+        "a": 405,
+        "r": 285,
+        "color":{ "r": 0, "g": 255, "b": 0 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 1,
+        "r": 18,
+        "s": 36,
+        "a": 354,
+        "color": { "r": 0, "g": 0, "b": 0 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 0.3,
+        "r": 20,
+        "s": 120,
+        "a": 145,
+        "color": { "r": 215, "g": 131, "b": 255 }
+    }
+]

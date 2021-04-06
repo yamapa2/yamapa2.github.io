@@ -13,6 +13,7 @@
 <script src="scripts/core/Ellipsloid.js"></script>
 <script src="scripts/core/Customoid.js"></script>
 <script src="scripts/core/Polyloid.js"></script>
+<script src="scripts/ui/OidView.js"></script>
 <script src="scripts/ui/main.js"></script>
 </head>
 
@@ -31,6 +32,20 @@
     <div class="config-card">
         <form id="oidForm" method="POST">
             <div class="config-table">
+                <div class="config-row">
+                    <div class="config-col-field"><label for="samples">ex:</label></div>
+                    <div class="config-col-widget">
+                        <select name="sample" onchange="javascript:onSamplesChanged(this.value)">
+                            <option id="oids0" value="none">Select one....</option>
+                            <option id="oids1" value="oids1.json">Oids 1</option>
+                            <option id="oids2" value="oids2.json">Oids 2</option>
+                            <option id="oids3" value="oids3.json">Oids 3</option>
+                            <option id="oids4" value="oids4.json">Oids 4</option>
+                            <option id="oids5" value="oids5.json">Oids 5</option>
+                        </select>
+                    </div>
+                    <div class="config-col-value"></div>
+                </div>
                 <div class="config-row">
                     <div class="config-col-field">
                         <label for="oidid">id:</label>
@@ -72,7 +87,7 @@
                 </div>
                 <div class="config-row">
                     <div class="config-col-field"><label for="scale">scale:</label></div>
-                    <div class="config-col-widget"><input type="range" name="scale" min="1" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-widget"><input type="range" name="scale" min="0.1" max="10" step="0.1" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
                     <div class="config-col-value"><label for="scale.value"></label></div>
                 </div>
                 <div class="config-row">
@@ -82,12 +97,12 @@
                 </div>
                 <div class="config-row">
                     <div class="config-col-field"><label for="r">r:</label></div>
-                    <div class="config-col-widget"><input type="range" name="r" min="1" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-widget"><input type="range" name="r" min="1" max="200" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
                     <div class="config-col-value"><label for="r.value"></label></div>
                 </div>
                 <div class="config-row">
                     <div class="config-col-field"><label for="s">s:</label></div>
-                    <div class="config-col-widget"><input type="range" name="s" min="1" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-widget"><input type="range" name="s" min="1" max="200" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
                     <div class="config-col-value"><label for="s.value"></label></div>
                 </div>
                 <div class="config-row">
@@ -134,7 +149,7 @@
                 </div>
                 <div class="config-row">
                     <div class="config-col-field"><label for="delphi">delphi:</label></div>
-                    <div class="config-col-widget"><input type="range" name="delphi" min="1" max="360" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-widget"><input type="range" name="delphi" min="0.1" max="360" step="0.1" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
                     <div class="config-col-value"><label for="delphi.value"></label></div>
                 </div>
                 <div class="config-row">
@@ -147,7 +162,7 @@
     </div>
 </body>
 <script lang="javascript>">
-    onOidIdChanged(allOidConfigs[0].id);
-    updateCanvas(allOidConfigs[0])
+    registerMouseMoves();
+    addOid();       //  Start with a sample Oid
 </script>
 </html>

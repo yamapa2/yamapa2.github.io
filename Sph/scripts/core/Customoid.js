@@ -20,6 +20,7 @@ class Customoid extends Oid {
 
         //	Pre-computed values to increase the speed
         this.maxDist = 0;
+        this.rbyslip = 0.0;
     }
 
 	initialize() {
@@ -42,17 +43,15 @@ class Customoid extends Oid {
             this.points[i].dirX = this.points[(i+1) % this.points.length].x - this.points[i].x;
             this.points[i].dirY = this.points[(i+1) % this.points.length].y - this.points[i].y;
 
-            this.points[i].dist = Math.sqrt(this.points[i].dirX * this.points[i].dirX + this.points[i].dirY * this.points[i].dirY);
+            this.points[i].dist = Math.sqrt(this.points[i].dirX ** 2 + this.points[i].dirY ** 2);
 
             this.points[i].dirX /= this.points[i].dist;
             this.points[i].dirY /= this.points[i].dist;
 		}
 
 		//	Farthest point on the Oid is "(r+s) plus the maximaum distance" far from center!
-		this.maxDist = Math.sqrt(this.maxDist) + this.r + this.s;
-
-		//	Compute scale
-		this.scale = this.scale / this.maxDist;
+        this.maxDist = Math.sqrt(this.maxDist) + this.r + this.s;
+        this.rbyslip = this.r / this.slip;
 
 		//	If number of steps are not specified, take it as 50 times the
 		//	number this.points specified
@@ -64,7 +63,7 @@ class Customoid extends Oid {
 
         //	Compute color gradient
         for(let c in this.colorGrad)
-            this.colorGrad[c] = (this.bgcolor[c] - this.color[c]) / (this.scale * this.maxDist);
+            this.colorGrad[c] = (this.bgcolor[c] - this.color[c]) / this.maxDist;
     }
 
     reset() {
@@ -76,18 +75,16 @@ class Customoid extends Oid {
 		this.curPointX = this.points[0].x;
 		this.curPointY = this.points[0].y;
 
-		this.px = this.locX + this.scale * this.maxDist * this.cosAngle;
-		this.py = this.locY + this.scale * this.maxDist * this.sinAngle;
+		this.px = this.maxDist;
+		this.py = this.maxDist;
     }
 
-	nextStep() {
+	_nextStep() {
 		let xt, yt, gf;
 
 		let hold;
-		hold = (this.curPointX - this.points[this.nCurPointInd].x)*(this.curPointX - this.points[this.nCurPointInd].x)
-			 + (this.curPointY - this.points[this.nCurPointInd].y)*(this.curPointY - this.points[this.nCurPointInd].y);
-		hold = Math.sqrt(hold);
-		hold = this.points[this.nCurPointInd].dist - hold;
+		hold = (this.curPointX - this.points[this.nCurPointInd].x) ** 2 + (this.curPointY - this.points[this.nCurPointInd].y) ** 2;
+		hold = this.points[this.nCurPointInd].dist - Math.sqrt(hold);
         
         if( hold >= this.delphi ) {
 			this.curPointX += this.points[this.nCurPointInd].dirX * this.delphi;
@@ -101,20 +98,25 @@ class Customoid extends Oid {
 		this.perimeter += this.delphi;
 
 		let cosPhi, sinPhi;
-		cosPhi = Math.cos(this.perimeter*this.slip/this.r);
-		sinPhi = Math.sin(this.perimeter*this.slip/this.r);
+		cosPhi = Math.cos(this.perimeter / this.rbyslip);
+		sinPhi = Math.sin(this.perimeter / this.rbyslip);
 
 		hold = cosPhi * this.points[this.nCurPointInd].dirY - sinPhi * (-this.points[this.nCurPointInd].dirX);
 		sinPhi = cosPhi * (-this.points[this.nCurPointInd].dirX) + sinPhi * this.points[this.nCurPointInd].dirY;
 		cosPhi = hold;
 
 		//	Compute the next point on the Oid
-		xt = this.scale * ( this.s * cosPhi + this.curPointX + this.r * this.points[this.nCurPointInd].dirY );
-		yt = this.scale * ( this.s * sinPhi + this.curPointY - this.r * this.points[this.nCurPointInd].dirX );
+		xt = this.s * cosPhi + this.curPointX + this.r * this.points[this.nCurPointInd].dirY;
+		yt = this.s * sinPhi + this.curPointY - this.r * this.points[this.nCurPointInd].dirX;
 
 		//	Apply color gradient
         gf = Math.sqrt(xt*xt + yt*yt);
 
 		return { x: xt, y: yt, gf: gf };
 	}
+    
+    _contains(pt) {
+        let x2y2 = x ** 2 + y ** 2;
+        return ((this.apmr - this.s) ** 2 <= x2y2 && x2y2 <= (this.apmr + this.s) ** 2);
+    }
 }

@@ -1,0 +1,142 @@
+[
+    {
+        "id": 1,
+        "type": "Polyloid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 0.3,
+        "angle": 0,
+        "r": 20,
+        "s": 124,
+        "slip": 1,
+        "a": 163,
+        "b": 363,
+        "d": 482,
+        "length": 501,
+        "vertices": 3,
+        "color": {
+            "r": 148,
+            "g": 55,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "delphi": 5,
+        "steps": 10781
+    },
+    {
+        "id": 2,
+        "type": "HypoTrochoid",
+        "locX": 590,
+        "locY": 504,
+        "scale": 0.4,
+        "angle": 0,
+        "r": 20,
+        "s": 120,
+        "slip": 1,
+        "a": 148,
+        "b": 363,
+        "d": 482,
+        "length": 501,
+        "vertices": 3,
+        "color": {
+            "r": 0,
+            "g": 150,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 3,
+        "type": "HypoTrochoid",
+        "locX": 591,
+        "locY": 194,
+        "scale": 0.4,
+        "angle": 0,
+        "r": 20,
+        "s": 120,
+        "slip": 1,
+        "a": 148,
+        "b": 363,
+        "d": 482,
+        "length": 501,
+        "vertices": 3,
+        "color": {
+            "r": 0,
+            "g": 150,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 4,
+        "type": "HypoTrochoid",
+        "locX": 319,
+        "locY": 349,
+        "scale": 0.4,
+        "angle": 0,
+        "r": 20,
+        "s": 120,
+        "slip": 1,
+        "a": 148,
+        "b": 363,
+        "d": 482,
+        "length": 501,
+        "vertices": 3,
+        "color": {
+            "r": 0,
+            "g": 150,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 5,
+        "type": "Polyloid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 0.5,
+        "angle": 0,
+        "r": 20,
+        "s": 78,
+        "slip": 1,
+        "a": 188,
+        "b": 310,
+        "d": 229,
+        "length": 501,
+        "vertices": 6,
+        "color": {
+            "r": 4,
+            "g": 50,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "delphi": 5,
+        "steps": 20781
+    }
+]

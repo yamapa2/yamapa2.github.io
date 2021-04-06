@@ -8,7 +8,7 @@ class Oid {
         //	Oid parameters
         this.delphi = 5;                        //	Paint resolution, 5 degrees default resolution
         this.slip = 1.0;		                //	Slippage factor of the generator circle, no slippage by default
-        this.scale = 0.0;		                //	Over all scaling of the Oid, to be filled by initialize()
+        this.scale = 1.0;		                //	Over all scaling of the Oid, to be filled by initialize()
         this.locX = this.locY = 0;	            //	Oid center, by default render the Oid at (0, 0)
         this.angle = 0.0;	                    //	Inclination with the X-axis
         this.color = { r: 0, g: 0, b: 0 };		//	Oid color
@@ -19,7 +19,7 @@ class Oid {
         this.px = this.py = this.x = this.y = 0.0;
 
         //	Oid color gradation parameters
-        this.bgcolor = { r: 0, g: 0, b: 0 };	//	Oids color to gradually (linear) change from 'color', by default take the background color of the applet
+        this.bgcolor = { r: 255, g: 255, b: 255 };	//	Oids color to gradually (linear) change from 'color', by default take the background color of the applet
         this.colorGrad = { r: 0, g: 0, b: 0 };	//	Color Gradient, by default no gradation is used
         this.grad = false;                     //	true if color gradation required, default is false
     
@@ -46,10 +46,25 @@ class Oid {
 		this.nCurStep = this.steps;
     }
 
+    _transformOid2Scr(pt) {
+        //	Translate to screen coordinates
+        let xs = this.locX + this.scale * (pt.x * this.cosAngle - pt.y * this.sinAngle);
+        let ys = this.locY + this.scale * (pt.x * this.sinAngle + pt.y * this.cosAngle);
+        return { x: xs, y: ys };
+    }
+
+    _transformScr2Oid(pt) {
+        //	Translate from screen coordinates
+        let xo = ((pt.y - this.locY) * this.sinAngle + (pt.x - this.locX) * this.cosAngle) / this.scale;
+        let yo = ((pt.y - this.locY) * this.cosAngle - (pt.x - this.locX) * this.sinAngle) / this.scale;
+        return { x: xo, y: yo };
+    }
+
     draw(g) {
         //	Draw the next step, until there are no more steps
 		while(this.nCurStep > 0) {
-            let ns = this.nextStep();
+            let ns = this._nextStep();
+
             let curColor = { r: this.color.r, g: this.color.g, b: this.color.b };
 
             //	Apply linear color gradient.
@@ -62,8 +77,9 @@ class Oid {
             }
 
             //	Translate to screen coordinates
-            this.x = this.locX + ns.x * this.cosAngle - ns.y * this.sinAngle;
-            this.y = this.locY + ns.x * this.sinAngle + ns.y * this.cosAngle;
+            ns = this._transformOid2Scr(ns);
+            this.x = ns.x;
+            this.y = ns.y;
 
             let oldColor = g.strokeStyle;   //	Store the color to restore after painting the current step
 
@@ -87,5 +103,9 @@ class Oid {
             this.phi += this.delphi;
             --this.nCurStep;
         }
-	}
+    }
+    
+    contains(pt) {
+        return this._contains(this._transformScr2Oid(pt));
+    }
 }

@@ -1,0 +1,71 @@
+[
+    {
+        "type": "Ellipsloid",
+        "color": { "r": 255, "g": 255, "b": 255 },
+        "bgcolor": { "r": 255, "g": 132, "b": 255 },
+        "scale": 0.5,
+        "locX": 500,
+        "locY": 350,
+        "a": 500,
+        "b": 100,
+        "r": 75,
+        "s": 75,
+        "slip": 6,
+        "angle": 170,
+        "steps": 25000,
+        "grad": true
+    },
+    {
+        "type": "Ellipsloid",
+        "color": { "r": 255, "g": 255, "b": 255 },
+        "bgcolor": { "r": 255, "g": 132, "b": 255 },
+        "scale": 0.5,
+        "locX": 500,
+        "locY": 350,
+        "a": 500,
+        "b": 100,
+        "r": 75,
+        "s": 75,
+        "slip": 6,
+        "angle": 50,
+        "steps": 25000,
+        "grad": true
+    },
+    {
+        "type": "Ellipsloid",
+        "color": { "r": 255, "g": 255, "b": 255 },
+        "bgcolor": { "r": 255, "g": 132, "b": 255 },
+        "scale": 0.5,
+        "locX": 500,
+        "locY": 350,
+        "a": 500,
+        "b": 100,
+        "r": 75,
+        "s": 75,
+        "slip": 6,
+        "angle": 110,
+        "steps": 25000,
+        "grad": true
+    },
+    {
+        "type": "HypoTrochoid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 0.5,
+        "r": 20,
+        "s": 89,
+        "slip": 3,
+        "a": 113,
+        "color": { "r": 255, "g": 255, "b": 255 }
+    },
+    {
+        "type": "HypoTrochoid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 0.8,
+        "r": 20,
+        "s": 120,
+        "a": 146,
+        "color": { "r": 121, "g": 128, "b": 255 }
+    }
+]

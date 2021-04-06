@@ -12,39 +12,29 @@ class Ellipsloid extends Oid {
 
         //	Pre-computed values to increase the speed
         this.e = 0.0;
+        this.ae = 0.0;
+        this.ae2 = 0.0;
+        this.rbyslip = 0.0;
 	}
 
 	initialize() {
         super.initialize()
         
-		//	This oid fits in a circle of radius (a+r+s)
-		this.scale = this.scale / (this.a + this.r + this.s);
-
 		//	Compute "Pre-computed" values!!
-		this.e = (this.a*this.a-this.b*this.b)/(2.0*this.a*this.a);
+        this.e = (this.a ** 2 - this.b ** 2)/(2.0 * this.a ** 2);
+        this.ae = this.a ** 2;
+        this.ae2 = this.ae ** 2;
+        this.rbyslip = this.r / this.slip;
 
 		//	Computing the perimeter of the Ellipse, by approximating with arcs, of angle 0.5 degrees
-		this.deltheta = 0.5 * Math.PI / 180.0;
-		this.theta = 0.0;
-		while(this.theta < Math.PI)
-		{
-			let hold, holdSq1, holdSq2;
-			let normal;
-			let aCosTheta, bSinTheta;
-			
-			aCosTheta = this.a * Math.cos(this.theta);
-			bSinTheta = this.b * Math.sin(this.theta);
+        this.deltheta = 0.5 * Math.PI / 180.0;
+        this.theta = 0;
+		while(this.theta < Math.PI) {
+			let rdistSq1 = this.a * Math.cos(this.theta) ** 2 + this.b * Math.sin(this.theta) ** 2;
+            this.theta += this.deltheta
+			let rdistSq2 = this.a * Math.cos(this.theta) ** 2 + this.b * Math.sin(this.theta) ** 2;
 
-			holdSq1 = aCosTheta * aCosTheta + bSinTheta * bSinTheta;
-
-			this.theta += this.deltheta;
-
-			aCosTheta = this.a * Math.cos(this.theta);
-			bSinTheta = this.b * Math.sin(this.theta);
-
-			holdSq2 = aCosTheta * aCosTheta + bSinTheta * bSinTheta;
-
-			this.perimeter += this.deltheta * (Math.sqrt(holdSq1) + Math.sqrt(holdSq2)) / 2.0;
+			this.perimeter += this.deltheta * (Math.sqrt(rdistSq1) + Math.sqrt(rdistSq2)) / 2.0;
 		}
 
 		//	Compute the incremental angle on Ellipse
@@ -56,59 +46,54 @@ class Ellipsloid extends Oid {
             this.steps = Math.round(25.0 * 2.0 * Math.PI / this.deltheta);
 
         //	Compute the color gradient
-        for(let c in this.colorGrade)
-            this.colorGrade[c] = (this.bgcolor[c] - this.color[c]) / (this.a + this.r + this.s);
+        for(let c in this.colorGrad)
+            this.colorGrad[c] = (this.bgcolor[c] - this.color[c]) / (this.a + this.r + this.s);
     }
     
     reset() {
-        super.reset();
-        
         //	Initialize the state of the Oid for drawing
         this.theta = this.perimeter = 0.0
+        this.rdist = 1.0;
 
-		this.px = this.locX + this.scale * (this.a + this.r + this.s) * this.cosAngle;
-		this.py = this.locY + this.scale * (this.a + this.r + this.s) * this.sinAngle;
-	}
+		this.px = this.a + this.r + this.s;
+		this.py = 0;
 
-	nextStep()
+        super.reset();
+    }
+
+	_nextStep()
 	{
-		let xt, yt, gf;
-
-		let hold, holdSq1, holdSq2;
-		let normal;
-		let aCosTheta, bSinTheta;
-		
-		aCosTheta = this.a * Math.cos(this.theta);
-		bSinTheta = this.b * Math.sin(this.theta);
-
-		holdSq1 = aCosTheta * aCosTheta + bSinTheta * bSinTheta;
-
+        let xt, yt, gf;
+        
 		this.theta += this.deltheta;
 
-		aCosTheta = this.a * Math.cos(this.theta);
-		bSinTheta = this.b * Math.sin(this.theta);
+		let aCosTheta = this.a * Math.cos(this.theta);
+        let bSinTheta = this.b * Math.sin(this.theta);
+        let holdSq1 = aCosTheta ** 2 + bSinTheta ** 2;
+		let nrdist = Math.sqrt(holdSq1);
 
-		holdSq2 = aCosTheta * aCosTheta + bSinTheta * bSinTheta;
+        this.perimeter += this.deltheta * (this.rdist + nrdist)/ 2.0;
+        this.rdist = nrdist;
 
-		this.perimeter += this.deltheta * (Math.sqrt(holdSq1) + Math.sqrt(holdSq2)) / 2.0;
+        let holdSq2  = (Math.abs(aCosTheta) + this.ae) ** 2 + bSinTheta ** 2
 
-		hold = aCosTheta + ((aCosTheta > 0) ? this.a : -this.a) * this.e;
-		hold *= hold;
-		holdSq1 = hold;
-
-		holdSq1 += bSinTheta * bSinTheta;
-
-		hold = Math.acos((holdSq1 + holdSq2 - this.a*this.e*this.a*this.e)/(2.0 * holdSq1 * holdSq2));
-		normal = this.theta + hold/2.0;
-		this.phi = this.perimeter*this.slip/this.r + normal;
+		let normal = this.theta + 0.5 * Math.acos((holdSq1 + holdSq2 - this.ae2)/(2 * holdSq1 * holdSq2));
+		this.phi = this.perimeter / this.rbyslip + normal;
 
 		//	Compute the next point on the Oid
-		xt = this.scale * (this.s * Math.cos(this.phi) + aCosTheta + this.r * Math.cos(normal));
-		yt = this.scale * (this.s * Math.sin(this.phi) + bSinTheta + this.r * Math.sin(normal));
+		xt = (this.s * Math.cos(this.phi) + aCosTheta + this.r * Math.cos(normal));
+		yt = (this.s * Math.sin(this.phi) + bSinTheta + this.r * Math.sin(normal));
 
 		//	Color gradient factor
         gf = Math.sqrt(xt*xt + yt*yt);
 
         return { x: xt, y: yt, gf: gf };
 	}
+
+    _contains(pt) {
+        let xy1 = (pt.x/(this.a+this.r-this.s)) ** 2 + (pt.y/(this.b+this.r-this.s) ** 2);
+        let xy2 = (pt.x/(this.a+this.r+this.s)) ** 2 + (pt.y/(this.b+this.r+this.s) ** 2);
+        let xy = pt.x ** 2 + pt.y ** 2;
+        return (xy1 <= xy && xy <= xy2);
+    }
 }

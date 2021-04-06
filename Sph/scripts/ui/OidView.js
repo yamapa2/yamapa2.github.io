@@ -85,8 +85,7 @@ class OidView {
                     break;
                 //  Boolean fields
                 case 'grad':
-                    if(field.checked)
-                        this.oidConfig[field.name] = field.checked;
+                    this.oidConfig[field.name] = field.checked;
                     break;
                 //  String fields
                 case 'type':
@@ -173,27 +172,19 @@ class OidView {
             document.getElementById(f+"cell").style.display = "none";
         
         //  Then find the relevant parameters for the current oid type
-        switch (val) {
-            case 'Cycloid':
-                fields = [ "length" ];
-                break;
-            case 'EpiTrochoid':
-            case 'HypoTrochoid':
-                fields = [ "a" ];
-                break;
-            case 'Ellipsloid':
-                fields = [ "a", "b" ];
-                break;
-            case 'Polyloid':
-                fields = [ "a", "b", "d", "vertices" ];
-                break;
-            default:
-                fields = [];
-        }
+        fields = {
+            "Cycloid": [ "length" ],
+            "EpiTrochoid": [ "a" ],
+            "HypoTrochoid": [ "a" ],
+            "Ellipsloid": [ "a", "b" ],
+            "Polyloid": [ "a", "b", "d", "vertices" ]
+        };
 
         //  Show the fields relevant to the current oid type
-        for(let f of fields)
-            document.getElementById(f+"cell").style.display = "block";
+        if(val in fields) {
+            for(let f of fields[val])
+                document.getElementById(f+"cell").style.display = "block";
+        }
 
         return this;
     }

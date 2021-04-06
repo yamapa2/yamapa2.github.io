@@ -86,10 +86,10 @@ class Oid {
             g.strokeStyle = `rgb(${curColor.r}, ${curColor.g}, ${curColor.b})`;
             g.beginPath();
 
-            g.moveTo(this.px, this.py);
             if(this.nCurStep == this.steps)
                 g.moveTo(this.x, this.y);
-
+            else
+                g.moveTo(this.px, this.py);
             g.lineTo(this.x, this.y);
 
             g.stroke();

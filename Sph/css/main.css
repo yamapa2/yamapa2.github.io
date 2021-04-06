@@ -30,28 +30,18 @@
     border-spacing: 5px;         
 }
 .config-card {
+    float: right;
     box-shadow: 0 4px 8px 0 #afafaf;
-    vertical-align: middle;
     line-height: 1.75;
-    display: inline-block;
-    position: absolute;
-    left: 1010px;
+    display: block;
     height: 720px;
 }
-.canvas-card {
+.content-card {
+    float: left;
     box-shadow: 0 4px 8px 0 #afafaf;
-    vertical-align: middle;
     line-height: 1.75;
-    display: inline-block;
-    width: 1000px;
-    height: 720px;
-}
-.json-card {
-    box-shadow: 0 4px 8px 0 #afafaf;
-    vertical-align: middle;
-    line-height: 1.75;
-    display: none;
-    width: 1000px;
+    display: block;
+    width: auto;
     height: 720px;
     overflow: scroll;
 }

@@ -103,11 +103,11 @@ function onJsonPressed(btn) {
     if(btn.innerHTML == "json") {
         //  If the current button title is json, dhide the canvas and show the json text
         canvasDiv.style.display = "none";
-        jsonDiv.style.display = "inline-block";
+        jsonDiv.style.display = "block";
         btn.innerHTML = "sph"   //  Change the button title to sph
     } else {
         //  If the current button title is sph, dhide the canvas and show the json text
-        canvasDiv.style.display = "inline-block";
+        canvasDiv.style.display = "block";
         jsonDiv.style.display = "none";
         btn.innerHTML = "json"  //  Change the bbutton title to json
     }

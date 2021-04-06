@@ -18,16 +18,18 @@
 </head>
 
 <body>
-    <div class="canvas-card" id="canvasdiv">
-        <div id="canvasdiv1" style="position:absolute; top:0px; left:0px;">
-            <canvas id="canvas1" height="700" width="1000"></canvas>
+    <div class="content-card">
+        <div id="canvasdiv">
+            <div id="canvasdiv1" style="position:absolute; top:0px; left:0px;">
+                <canvas id="canvas1" height="700" width="1000"></canvas>
+            </div>
         </div>
-    </div>
-    <div class="json-card" id="jsondiv">
-        <form style="text-align: center;" method="POST">
-            <textarea class="json-textarea" id="jsonoids" name="oids"></textarea>
-            <button name="load" onclick="javascript:onLoadPressed(this); return false;">Load</button>
-        </form>
+        <div id="jsondiv" style="display: none;">
+            <form style="text-align: center;" method="POST">
+                <textarea class="json-textarea" id="jsonoids" name="oids"></textarea><br/>
+                <button name="load" onclick="javascript:onLoadPressed(this); return false;">Load</button>
+            </form>
+        </div>
     </div>
     <div class="config-card">
         <form id="oidForm" method="POST">
@@ -137,11 +139,11 @@
                 </div>
                 <div class="config-row">
                     <div class="config-col-field"><label for="color">color:</label></div>
-                    <div class="config-col-widget"><input type="color" name="color" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
-                </div>
-                <div class="config-row">
-                    <div class="config-col-field"><label for="bgcolor">bgcolor:</label></div>
-                    <div class="config-col-widget"><input type="color" name="bgcolor" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
+                    <div class="config-col-widget">
+                        <input type="color" name="color" oninput="onOidUpdated()" onchange="onOidUpdated()"/>
+                        <label for="bgcolor">bgcolor:</label>
+                        <input type="color" name="bgcolor" oninput="onOidUpdated()" onchange="onOidUpdated()"/>
+                    </div>
                 </div>
                 <div class="config-row">
                     <div class="config-col-field"><label for="grad">grad:</label></div>

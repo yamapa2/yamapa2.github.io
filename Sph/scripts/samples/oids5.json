@@ -59,13 +59,16 @@
         "color": { "r": 255, "g": 255, "b": 255 }
     },
     {
-        "type": "HypoTrochoid",
+        "type": "Polaroid",
         "locX": 500,
         "locY": 350,
-        "scale": 0.8,
+        "scale": 0.3,
         "r": 20,
         "s": 120,
-        "a": 146,
-        "color": { "r": 121, "g": 128, "b": 255 }
+        "slip": 14,
+        "rdef": "300",
+        "color": { "r": 148, "g": 55, "b": 255 },
+        "bgcolor": { "r": 0, "g": 0, "b": 0 },
+        "steps": 1250
     }
 ]

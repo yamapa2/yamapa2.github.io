@@ -6,6 +6,11 @@ class Cycloid extends Oid {
 	    this.rbyslip = 0.0;
 	}
 
+    fieldRequirements() {
+        let req = super.fieldRequirements();
+        return { mandatory: req.mandatory.concat([ "length" ]), optional: req.optional };
+    }
+
 	initialize() {
         super.initialize()
         
@@ -19,25 +24,12 @@ class Cycloid extends Oid {
             this.colorGrad[c] = (this.bgcolor[c] - this.color[c]) / this.length;
     }
 
-    reset() {
-        //	Initialize the Oid state for drawing
-		this.px = this.length;
-        this.py = this.r-this.s;
-
-        super.reset();
-	}
-
 	_nextStep() {
-		let xt, yt, gf;
+        //	Compute the next point on the Oid
+        let pt = new Vector(this.length - this.rbyslip * this.phi, this.r)
+            .minus(new Vector(this.s).rotate(this.phi));
 
-		//	Compute the next point on the Oid
-		xt = this.s * Math.sin(this.phi) + this.length - this.rbyslip * this.phi;
-		yt = this.r - this.s * Math.cos(this.phi);
-
-        //	Color gradient factor
-        gf = yt < 0  ? -yt : yt;
-
-        return { x: xt, y: yt, gf: gf };
+        return { pt: pt, gf: Math.abs(pt.y) };
     }
     
     _contains(pt) {

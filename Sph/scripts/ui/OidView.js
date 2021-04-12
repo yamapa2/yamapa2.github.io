@@ -9,6 +9,9 @@ var sampleOidConfig = {
     a: 146,
     r: 20,
     s: 120,
+    rdef: "200*Math.sin(3*t)",
+    xdef: "t",
+    ydef: "0",
     slip: 1,
     color: { r: 0, g: 0, b: 0 },
     bgcolor: { r: 0, g: 0, b: 0 },
@@ -89,6 +92,9 @@ class OidView {
                     break;
                 //  String fields
                 case 'type':
+                case 'rdef':
+                case 'xdef':
+                case 'ydef':
                     this.oidConfig[field.name] = field.value;
                     break;
                 //  Rest are all numeric fields
@@ -166,25 +172,30 @@ class OidView {
 
     //  Oid Type changed in the UI, make sure the right parameters are displayed
     updateOidType(val) {
-        //  First hide all the fields that depend on the oid type
-        let fields = [ "a", "b", "d", "length", "vertices" ];
-        for(let f of fields)
-            document.getElementById(f+"cell").style.display = "none";
-        
-        //  Then find the relevant parameters for the current oid type
-        fields = {
-            "Cycloid": [ "length" ],
-            "EpiTrochoid": [ "a" ],
-            "HypoTrochoid": [ "a" ],
-            "Ellipsloid": [ "a", "b" ],
-            "Polyloid": [ "a", "b", "d", "vertices" ]
-        };
-
-        //  Show the fields relevant to the current oid type
-        if(val in fields) {
-            for(let f of fields[val])
-                document.getElementById(f+"cell").style.display = "block";
+        //  Utility function to toggle display of a field
+        function toggleFields(fnames, display="none") {
+            for(let f of fnames) {
+                let fe = document.getElementById(f+"cell");
+                if(fe != null)
+                    fe.style.display = display;
+            }
         }
+
+        //  First hide all the fields that depend on the oid type
+        let fields = [];
+        let oidOptions = document.getElementById("typeselect").options;
+        for(let opt of oidOptions) {
+            let oidClass = (Function('return ' +  opt.value))();
+            let holdFields = (new oidClass).fieldRequirements();
+            fields = [...fields, ...holdFields.mandatory, ...holdFields.optional];
+        }
+        toggleFields(fields, "none");
+
+        //  Then find the relevant parameters for the current oid type and show them
+        let oidClass = (Function('return ' +  val))();
+        let holdFields = (new oidClass).fieldRequirements();
+        fields = [...holdFields.mandatory, ...holdFields.optional];
+        toggleFields(fields, "block");
 
         return this;
     }
@@ -216,5 +227,18 @@ class OidView {
         flashCanvas();
 
         return this;
+    }
+
+    //  Function to trim unused fields in Oid config
+    trimOidConfig() {
+        let oidClass = (Function('return ' + this.oidConfig.type))();
+        let fields = (new oidClass).fieldRequirements();
+        fields = [...fields.mandatory, ...fields.optional];
+
+        let trimmedOidConfig = {};
+        for(let field of fields)
+            trimmedOidConfig[field] = this.oidConfig[field];
+
+        return trimmedOidConfig;
     }
 }

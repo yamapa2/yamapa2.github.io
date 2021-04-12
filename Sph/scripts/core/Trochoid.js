@@ -5,6 +5,11 @@ class Trochoid extends Oid {
         this.rbyaslip = 0;
 	}
 
+    fieldRequirements() {
+        let req = super.fieldRequirements();
+        return { mandatory: req.mandatory.concat([ "a" ]), optional: req.optional };
+    }
+
 	initialize() {
         super.initialize()
         

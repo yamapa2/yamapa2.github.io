@@ -1,12 +1,22 @@
+class PolyloidGenerator {
+    constructor(points) { this.points = points; this.index = -1; }
+	initialize() { this.index = -1; }
+    reset() { this.index = -1; }
+	next() {
+        this.index =  (this.index + 1) % this.points.length;
+        return  this.points[this.index];
+    }
+}
+
 class Polyloid extends Customoid {
 	constructor() {
 		super();
 
 		//	Generator polygon parameters
 	    this.vertices = 0;      //	Number of vertices
-        this.a = this.b = 0;	//	Radii of "Vertex-circle" and "Side-circle", default is a void polygon
         this.d = 0;             //	Half of the side length minus radius of the vertex-circle, default is a void polygon
-		this.epsilon = 20.0;	//	//	Resolution (in pixels) on the polygon, default resolution
+        this.a = this.b = 0;	//	Radii of "Vertex-circle" and "Side-circle", default is a void polygon
+        this.epsilon = 20;	    //	Resolution (in pixels) on the polygon, default resolution
 	}
 
 	createPoints() {
@@ -64,7 +74,7 @@ class Polyloid extends Customoid {
 					xt = ht;
 
 					//	Add the new point to the list of points
-					this.points.push({ x: xt, y: yt });
+					this.points.push(new Vector(xt, yt));
 				}
 			}
 
@@ -85,7 +95,7 @@ class Polyloid extends Customoid {
 					xt = ht;
 
 					//	Add the new point to the list of points
-					this.points.push({ x: xt, y: yt });
+					this.points.push(new Vector(xt, yt));
 				}
 			}
 			else
@@ -106,7 +116,7 @@ class Polyloid extends Customoid {
 					xt = ht;
 
 					//	Add the new point to the list of points
-					this.points.push({ x: xt, y: yt });
+					this.points.push(new Vector(xt, yt));
 				}
 			}
 
@@ -127,11 +137,16 @@ class Polyloid extends Customoid {
 					xt = ht;
 
 					//	Add the new point to the list of points
-					this.points.push({ x: xt, y: yt });
+					this.points.push(new Vector(xt, yt));
 				}
 			}
 		}
 	}
+
+    fieldRequirements() {
+        let req = super.fieldRequirements();
+        return { mandatory: req.mandatory.concat([ "a", "vertices" ]), optional: req.optional.concat([ "b", "d", "epsilon" ])};
+    }
 
 	initialize() {
 		//	Subtract a from d.  If d is not specified assume it as equal to a
@@ -143,16 +158,13 @@ class Polyloid extends Customoid {
 		//	If b is specified, it should be greater/equal to d, otherwise the vertex-circle and
 		//	side-circle will not touch each other
 		//	epsilon, Resolution must be +ve
-
-		//	Create the points on the generating polygon
-		this.createPoints();
 		//	Ensure that there are atleat 2 points
 
-		//	Initialize the Customoid
+		//	Create the points on the generating polygon
+        this.createPoints();
+        this.generator = new PolyloidGenerator(this.points);
+
+        //	Initialize the Customoid
 		super.initialize();
 	}
-    
-    _contains(pt) {
-        return false;
-    }
 }

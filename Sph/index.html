@@ -6,13 +6,15 @@
 <link rel="stylesheet" href="css/main.css"></link>
 <script src="scripts/core/Sph.js"></script>
 <script src="scripts/core/Oid.js"></script>
+<script src="scripts/core/Customoid.js"></script>
 <script src="scripts/core/Cycloid.js"></script>
 <script src="scripts/core/Trochoid.js"></script>
 <script src="scripts/core/EpiTrochoid.js"></script>
 <script src="scripts/core/HypoTrochoid.js"></script>
 <script src="scripts/core/Ellipsloid.js"></script>
-<script src="scripts/core/Customoid.js"></script>
 <script src="scripts/core/Polyloid.js"></script>
+<script src="scripts/core/Polaroid.js"></script>
+<script src="scripts/core/Cartisianoid.js"></script>
 <script src="scripts/ui/OidView.js"></script>
 <script src="scripts/ui/main.js"></script>
 </head>
@@ -44,6 +46,7 @@
                             <option id="oids3" value="oids3.json">Oids 3</option>
                             <option id="oids4" value="oids4.json">Oids 4</option>
                             <option id="oids5" value="oids5.json">Oids 5</option>
+                            <option id="oids6" value="oids6.json">Oids 6</option>
                         </select>
                     </div>
                     <div class="config-col-value"></div>
@@ -67,12 +70,14 @@
                 <div class="config-row">
                     <div class="config-col-field"><label for="type">type:</label></div>
                     <div class="config-col-widget">
-                        <select name="type" onchange="javascript:onOidTypeChanged(this.value)">
+                        <select id="typeselect" name="type" onchange="javascript:onOidTypeChanged(this.value)">
                             <option value="Cycloid">Cycloid</option>
                             <option value="EpiTrochoid">EpiTrochoid</option>
                             <option value="HypoTrochoid">HypoTrochoid</option>
                             <option value="Ellipsloid">Ellipsloid</option>
                             <option value="Polyloid">Polyloid</option>
+                            <option value="Polaroid">Adv: Polaroid</option>
+                            <option value="Cartisianoid">Adv: Cartisianoid</option>
                         </select>
                     </div>
                     <div class="config-col-value"></div>
@@ -126,6 +131,21 @@
                     <div class="config-col-field"><label for="d">d:</label></div>
                     <div class="config-col-widget"><input type="range" name="d" min="1" max="1000" oninput="onOidUpdated()" onchange="onOidUpdated()"/></div>
                     <div class="config-col-value"><label for="d.value"></label></div>
+                </div>
+                <div id="rdefcell" class="config-row">
+                    <div class="config-col-field"><label for="rdef">rdef:</label></div>
+                    <div class="config-col-widget"><input type="text" name="rdef" onfocusout="onOidUpdated()"/></div>
+                    <div class="config-col-value"></div>
+                </div>
+                <div id="xdefcell" class="config-row">
+                    <div class="config-col-field"><label for="xdef">xdef:</label></div>
+                    <div class="config-col-widget"><input type="text" name="xdef" onfocusout="onOidUpdated()"/></div>
+                    <div class="config-col-value"></div>
+                </div>
+                <div id="ydefcell" class="config-row">
+                    <div class="config-col-field"><label for="ydef">ydef:</label></div>
+                    <div class="config-col-widget"><input type="text" name="ydef" onfocusout="onOidUpdated()"/></div>
+                    <div class="config-col-value"></div>
                 </div>
                 <div id="lengthcell" class="config-row">
                     <div class="config-col-field"><label for="length">length:</label></div>

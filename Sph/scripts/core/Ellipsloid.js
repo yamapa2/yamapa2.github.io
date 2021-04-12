@@ -17,6 +17,11 @@ class Ellipsloid extends Oid {
         this.rbyslip = 0.0;
 	}
 
+    fieldRequirements() {
+        let req = super.fieldRequirements();
+        return { mandatory: req.mandatory.concat([ "a", "b" ]), optional: req.optional };
+    }
+
 	initialize() {
         super.initialize()
         
@@ -55,16 +60,11 @@ class Ellipsloid extends Oid {
         this.theta = this.perimeter = 0.0
         this.rdist = 1.0;
 
-		this.px = this.a + this.r + this.s;
-		this.py = 0;
-
         super.reset();
     }
 
 	_nextStep()
 	{
-        let xt, yt, gf;
-        
 		this.theta += this.deltheta;
 
 		let aCosTheta = this.a * Math.cos(this.theta);
@@ -80,14 +80,12 @@ class Ellipsloid extends Oid {
 		let normal = this.theta + 0.5 * Math.acos((holdSq1 + holdSq2 - this.ae2)/(2 * holdSq1 * holdSq2));
 		this.phi = this.perimeter / this.rbyslip + normal;
 
-		//	Compute the next point on the Oid
-		xt = (this.s * Math.cos(this.phi) + aCosTheta + this.r * Math.cos(normal));
-		yt = (this.s * Math.sin(this.phi) + bSinTheta + this.r * Math.sin(normal));
+        //	Compute the next point on the Oid
+        let pt = new Vector(aCosTheta, bSinTheta)
+            .plus(new Vector(this.s).rotate(this.phi))
+            .plus(new Vector(this.r).rotate(normal))
 
-		//	Color gradient factor
-        gf = Math.sqrt(xt*xt + yt*yt);
-
-        return { x: xt, y: yt, gf: gf };
+        return { pt: pt, gf: pt.magnitude() };
 	}
 
     _contains(pt) {

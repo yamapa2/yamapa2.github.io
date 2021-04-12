@@ -1,122 +1,82 @@
-class Point {
-    constructor() {
-        this.x = this.y = 0;        //	Point coordinates
-        this.dist = 0;              //	Distance to the next point
-        this.dirX = this.dirY = 0;  //	Directional cosine in X/Y-direction to the next point
-    }
-}
-
 class Customoid extends Oid {
 	constructor() {
 		super();
 
         //	Generating oid parameters
-        this.points = [];	//	this.points on the oid
+        this.generator = null;  //  Points on the Oid
 
         //	Oid state variables
-        this.perimeter = 0;
-        this.nCurPointInd = 0;
-        this.curPointX = this.curPointY = 0;
+        this.segment = null;    //  Current segment being processed - captures from, to, length and dir
 
         //	Pre-computed values to increase the speed
-        this.maxDist = 0;
-        this.rbyslip = 0.0;
+        this.rdelphi = this.r * this.delphi;
+    }
+
+    createSegment(from, to) {
+        let segment = { from: from, to: to };
+        segment.dir = segment.to.minus(segment.from).dir();
+        segment.normal = segment.dir.normal();
+        segment.length = segment.to.minus(segment.from).magnitude();
+        return segment;
     }
 
 	initialize() {
-        super.initialize()
+        super.initialize();
+        this.generator.initialize();
 
-        for(let i = 0 ; i < this.points.length ; ++i)
-            this.points[i] = Object.assign(new Point, this.points[i])
-        
-		//	Compute the dirX (directional cosine along X-axis, from current point to next point),
-		//	dirY (directional cosine along Y-axis, from current point to next point),
-		//	and dist (distance between the current point to next point) for each point.
-		//	Also compute the maximum distance from the center of the curve
-		this.maxDist = 0.0;
-		for(let i = 0 ; i < this.points.length ; ++i) {
-			let dist;
-			dist = this.points[i].x * this.points[i].x + this.points[i].y * this.points[i].y;
-			if(dist > this.maxDist)
-                this.maxDist = dist;
+        this.rdelphi = this.r * this.delphi;
 
-            this.points[i].dirX = this.points[(i+1) % this.points.length].x - this.points[i].x;
-            this.points[i].dirY = this.points[(i+1) % this.points.length].y - this.points[i].y;
-
-            this.points[i].dist = Math.sqrt(this.points[i].dirX ** 2 + this.points[i].dirY ** 2);
-
-            this.points[i].dirX /= this.points[i].dist;
-            this.points[i].dirY /= this.points[i].dist;
-		}
-
-		//	Farthest point on the Oid is "(r+s) plus the maximaum distance" far from center!
-        this.maxDist = Math.sqrt(this.maxDist) + this.r + this.s;
-        this.rbyslip = this.r / this.slip;
-
-		//	If number of steps are not specified, take it as 50 times the
-		//	number this.points specified
+		//	If number of steps are not specified, take it as 50000
 		if(this.steps <= 0)
-            this.steps = 50 * this.points.length;
+            this.steps = 5000;
+            
+        //  Find min and max distance from the center for cacluating color gradient
+        let maxDist = 0;
+        let minDist = 999999;
+        for(let i = 0; i < this.steps; ++i) {
+            let dist = this.generator.next().magnitude();
+            maxDist = Math.max(maxDist, dist);
+            minDist = Math.min(minDist, dist);
+        }
+        //  Make sure to reset the generator for drawing
+        this.generator.reset();
 
-		//	In this oid delphi is the incremental distance on the contour.
-		this.delphi *= this.r;
-
-        //	Compute color gradient
+        //	Compute the color gradient
         for(let c in this.colorGrad)
-            this.colorGrad[c] = (this.bgcolor[c] - this.color[c]) / this.maxDist;
+            this.colorGrad[c] = (this.bgcolor[c] - this.color[c]) / maxDist;
     }
 
     reset() {
         super.reset();
+        this.generator.reset();
 
         //  Reset the state of the oid for drawing
-		this.perimeter = 0.0;
-		this.nCurPointInd = 0;
-		this.curPointX = this.points[0].x;
-		this.curPointY = this.points[0].y;
-
-		this.px = this.maxDist;
-		this.py = this.maxDist;
+        this.segment = this.createSegment(this.generator.next(), this.generator.next());
+        this.contact = this.segment.from.copy();
     }
 
 	_nextStep() {
-		let xt, yt, gf;
+        let hold = this.segment.length - this.contact.minus(this.segment.from).magnitude();
+        while(hold <= 0) {
+            //  Segment is too short, go the next point on the genrator
+            this.segment = this.createSegment(this.segment.to, this.generator.next());
+            hold += this.segment.length;
+        }
 
-		let hold;
-		hold = (this.curPointX - this.points[this.nCurPointInd].x) ** 2 + (this.curPointY - this.points[this.nCurPointInd].y) ** 2;
-		hold = this.points[this.nCurPointInd].dist - Math.sqrt(hold);
-        
-        if( hold >= this.delphi ) {
-			this.curPointX += this.points[this.nCurPointInd].dirX * this.delphi;
-			this.curPointY += this.points[this.nCurPointInd].dirY * this.delphi;
+        //  Check if the circle rolls over the current segment or not
+        if(hold >= this.rdelphi) {
+			this.contact = this.contact.plus(this.segment.dir.scale(this.rdelphi));
 		} else {
-            this.nCurPointInd = (this.nCurPointInd + 1) % this.points.length;
-			this.curPointX = this.points[this.nCurPointInd].x + this.points[this.nCurPointInd].dirX * (this.delphi - hold);
-			this.curPointY = this.points[this.nCurPointInd].y + this.points[this.nCurPointInd].dirY * (this.delphi - hold);
+            //  If rolls over current segment, move to the next segment
+            this.segment = this.createSegment(this.segment.to, this.generator.next());
+            this.contact = this.segment.from.plus(this.segment.dir.scale(this.rdelphi - hold));
 		}
 
-		this.perimeter += this.delphi;
-
-		let cosPhi, sinPhi;
-		cosPhi = Math.cos(this.perimeter / this.rbyslip);
-		sinPhi = Math.sin(this.perimeter / this.rbyslip);
-
-		hold = cosPhi * this.points[this.nCurPointInd].dirY - sinPhi * (-this.points[this.nCurPointInd].dirX);
-		sinPhi = cosPhi * (-this.points[this.nCurPointInd].dirX) + sinPhi * this.points[this.nCurPointInd].dirY;
-		cosPhi = hold;
-
 		//	Compute the next point on the Oid
-		xt = this.s * cosPhi + this.curPointX + this.r * this.points[this.nCurPointInd].dirY;
-		yt = this.s * sinPhi + this.curPointY - this.r * this.points[this.nCurPointInd].dirX;
+        let pt = this.contact
+            .plus(this.segment.normal.scale(this.r))
+            .plus(this.segment.normal.scale(this.s).rotate(this.phi * this.slip + Math.PI));
 
-		//	Apply color gradient
-        gf = Math.sqrt(xt*xt + yt*yt);
-
-		return { x: xt, y: yt, gf: gf };
+		return { pt: pt, gf: pt.magnitude() };
 	}
-    
-    _contains(pt) {
-        let x2y2 = x ** 2 + y ** 2;
-        return ((this.apmr - this.s) ** 2 <= x2y2 && x2y2 <= (this.apmr + this.s) ** 2);
-    }
 }

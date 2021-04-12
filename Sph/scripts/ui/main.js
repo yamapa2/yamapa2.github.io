@@ -98,7 +98,7 @@ function onJsonPressed(btn) {
     let jsonoids = document.getElementById("jsonoids");
 
     //  Create json string from the all the existing Oids
-    jsonoids.value = JSON.stringify(allOidViews.map(x => x.oidConfig), null, 4);    //.replace(/"([^"]+)":/g, '$1:');
+    jsonoids.value = JSON.stringify(allOidViews.map(x => x.trimOidConfig()), null, 4);    //.replace(/"([^"]+)":/g, '$1:');
 
     if(btn.innerHTML == "json") {
         //  If the current button title is json, dhide the canvas and show the json text

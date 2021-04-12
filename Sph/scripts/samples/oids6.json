@@ -1,0 +1,437 @@
+[
+    {
+        "id": 1,
+        "type": "HypoTrochoid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 1.9,
+        "angle": 0,
+        "r": 80,
+        "s": 90,
+        "slip": 1,
+        "a": 204,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 254,
+            "g": 255,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 142,
+            "b": 0
+        },
+        "grad": true,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 2,
+        "type": "Polyloid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 0.4,
+        "angle": 0,
+        "r": 20,
+        "s": 120,
+        "slip": 1,
+        "a": 146,
+        "b": 126,
+        "d": 266,
+        "length": 501,
+        "vertices": 4,
+        "color": {
+            "r": 254,
+            "g": 252,
+            "b": 120
+        },
+        "bgcolor": {
+            "r": 148,
+            "g": 32,
+            "b": 146
+        },
+        "grad": true,
+        "delphi": 5,
+        "steps": 13438
+    },
+    {
+        "id": 3,
+        "type": "Polyloid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 0.7,
+        "angle": 0,
+        "r": 20,
+        "s": 29,
+        "slip": 1,
+        "a": 146,
+        "b": 126,
+        "d": 213,
+        "length": 501,
+        "vertices": 4,
+        "color": {
+            "r": 254,
+            "g": 252,
+            "b": 120
+        },
+        "bgcolor": {
+            "r": 255,
+            "g": 147,
+            "b": 0
+        },
+        "grad": true,
+        "delphi": 5,
+        "steps": 13438
+    },
+    {
+        "id": 4,
+        "type": "HypoTrochoid",
+        "locX": 725,
+        "locY": 125,
+        "scale": 0.5,
+        "angle": 90,
+        "r": 100,
+        "s": 75,
+        "slip": 2,
+        "a": 235,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 121,
+            "g": 128,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 5,
+        "type": "HypoTrochoid",
+        "locX": 725,
+        "locY": 573,
+        "scale": 0.5,
+        "angle": 90,
+        "r": 100,
+        "s": 75,
+        "slip": 2,
+        "a": 235,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 121,
+            "g": 128,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 6,
+        "type": "HypoTrochoid",
+        "locX": 277,
+        "locY": 573,
+        "scale": 0.5,
+        "angle": 90,
+        "r": 100,
+        "s": 75,
+        "slip": 2,
+        "a": 235,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 121,
+            "g": 128,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 7,
+        "type": "HypoTrochoid",
+        "locX": 278,
+        "locY": 129,
+        "scale": 0.5,
+        "angle": 90,
+        "r": 100,
+        "s": 75,
+        "slip": 2,
+        "a": 235,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 121,
+            "g": 128,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 8,
+        "type": "HypoTrochoid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 0.4,
+        "angle": 90,
+        "r": 100,
+        "s": 120,
+        "slip": 2,
+        "a": 235,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 146,
+            "g": 144,
+            "b": 0
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 9,
+        "type": "HypoTrochoid",
+        "locX": 500,
+        "locY": 350,
+        "scale": 0.7,
+        "angle": 90,
+        "r": 104,
+        "s": 57,
+        "slip": 2,
+        "a": 760,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 255,
+            "g": 132,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 10,
+        "type": "HypoTrochoid",
+        "locX": 154,
+        "locY": 246,
+        "scale": 0.3,
+        "angle": 90,
+        "r": 100,
+        "s": 75,
+        "slip": 2,
+        "a": 235,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 121,
+            "g": 128,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 11,
+        "type": "HypoTrochoid",
+        "locX": 125,
+        "locY": 350,
+        "scale": 0.2,
+        "angle": 90,
+        "r": 100,
+        "s": 75,
+        "slip": 2,
+        "a": 235,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 121,
+            "g": 128,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 12,
+        "type": "HypoTrochoid",
+        "locX": 155,
+        "locY": 454,
+        "scale": 0.3,
+        "angle": 90,
+        "r": 100,
+        "s": 75,
+        "slip": 2,
+        "a": 235,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 121,
+            "g": 128,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 13,
+        "type": "HypoTrochoid",
+        "locX": 847,
+        "locY": 244,
+        "scale": 0.3,
+        "angle": 90,
+        "r": 100,
+        "s": 75,
+        "slip": 2,
+        "a": 235,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 121,
+            "g": 128,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 14,
+        "type": "HypoTrochoid",
+        "locX": 845,
+        "locY": 453,
+        "scale": 0.3,
+        "angle": 90,
+        "r": 100,
+        "s": 75,
+        "slip": 2,
+        "a": 235,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 121,
+            "g": 128,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    },
+    {
+        "id": 15,
+        "type": "HypoTrochoid",
+        "locX": 878,
+        "locY": 350,
+        "scale": 0.2,
+        "angle": 90,
+        "r": 100,
+        "s": 75,
+        "slip": 2,
+        "a": 235,
+        "b": 501,
+        "d": 501,
+        "length": 501,
+        "vertices": 7,
+        "color": {
+            "r": 121,
+            "g": 128,
+            "b": 255
+        },
+        "bgcolor": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+        },
+        "grad": false,
+        "delphi": 5,
+        "steps": 0
+    }
+]

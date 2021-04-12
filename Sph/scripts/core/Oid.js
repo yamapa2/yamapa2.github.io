@@ -1,3 +1,18 @@
+//  Represents a two dimensional position vector
+class Vector {
+    constructor(x=0, y=0) { this.x = x; this.y = y; }
+    copy() { return  new Vector(this.x, this.y); }
+    plus(v) { return  new Vector(this.x+v.x, this.y+v.y); }
+    minus(v) { return  new Vector(this.x-v.x, this.y-v.y); }
+    magnitude() { return Math.sqrt(this.x ** 2 + this.y ** 2); }
+    dir() { return this.scale(1/this.magnitude()) }
+    normal() { return this.dir().rotate(-Math.PI/2); }
+    scale(s) { return  new Vector(this.x*s, this.y*s); }
+    rotate(theta) { return this.rotate2(Math.cos(theta), -Math.sin(theta)); }
+    rotate2(cosTheta, sinTheta) { return new Vector(this.x*cosTheta + this.y*sinTheta, -this.x*sinTheta + this.y*cosTheta); }
+    polar() { return { r: this.magnitude(), theta: Math.atan2(this.y, this.x) }; }
+}
+
 //	Abstract base class for all the types of Oids
 class Oid {
     constructor() {
@@ -14,17 +29,25 @@ class Oid {
         this.color = { r: 0, g: 0, b: 0 };		//	Oid color
         
         //	Oid state
-        this.nCurStep = this.steps = 0;	    //  To be filled by initialize() and initDraw()
+        this.nCurStep = this.steps = 0;	        //  To be filled by initialize() and initDraw()
         this.phi = 0.0;
-        this.px = this.py = this.x = this.y = 0.0;
+        this.pt0 = new Vector();
+        this.pt1 = new Vector();
 
         //	Oid color gradation parameters
         this.bgcolor = { r: 255, g: 255, b: 255 };	//	Oids color to gradually (linear) change from 'color', by default take the background color of the applet
-        this.colorGrad = { r: 0, g: 0, b: 0 };	//	Color Gradient, by default no gradation is used
-        this.grad = false;                     //	true if color gradation required, default is false
+        this.colorGrad = { r: 0, g: 0, b: 0 };	    //	Color Gradient, by default no gradation is used
+        this.grad = false;                          //	true if color gradation required, default is false
     
         //	Pre-computed values to increase the speed
         this.cosAngle = this.sinAngle = 0;
+    }
+
+    fieldRequirements() {
+        return {
+            mandatory: [ "r" ],
+            optional: [ "s", "locX", "locY", "scale", "angle", "slip", "delphi", "steps", "color", "bgcolor", "grad" ]
+        };
     }
 
     initialize() {
@@ -37,31 +60,30 @@ class Oid {
         
         //	Pre-computed values to increase the speed
         this.cosAngle = Math.cos(this.angle);
-		this.sinAngle = Math.sin(this.angle);
+        this.sinAngle = Math.sin(this.angle);
+        this.center = new Vector(this.locX, this.locY);
     }
 
     reset() {
 		this.phi = 0.0;
-		this.px = this.py = this.x = this.y = 0.0;
+        this.pt0 = new Vector();
+        this.pt1 = new Vector();
 		this.nCurStep = this.steps;
     }
 
     _transformOid2Scr(pt) {
         //	Translate to screen coordinates
-        let xs = this.locX + this.scale * (pt.x * this.cosAngle - pt.y * this.sinAngle);
-        let ys = this.locY + this.scale * (pt.x * this.sinAngle + pt.y * this.cosAngle);
-        return { x: xs, y: ys };
+        return pt.rotate2(this.cosAngle, -this.sinAngle).scale(this.scale).plus(this.center);
     }
 
     _transformScr2Oid(pt) {
         //	Translate from screen coordinates
-        let xo = ((pt.y - this.locY) * this.sinAngle + (pt.x - this.locX) * this.cosAngle) / this.scale;
-        let yo = ((pt.y - this.locY) * this.cosAngle - (pt.x - this.locX) * this.sinAngle) / this.scale;
-        return { x: xo, y: yo };
+        return pt.minus(this.center).scale(1/this.scale).rotate(this.cosAngle, this.sinAngle);
     }
 
     draw(g) {
         //	Draw the next step, until there are no more steps
+        this.pt0 = this._transformOid2Scr(this._nextStep().pt);
 		while(this.nCurStep > 0) {
             let ns = this._nextStep();
 
@@ -77,35 +99,31 @@ class Oid {
             }
 
             //	Translate to screen coordinates
-            ns = this._transformOid2Scr(ns);
-            this.x = ns.x;
-            this.y = ns.y;
+            this.pt1 = this._transformOid2Scr(ns.pt);
 
             let oldColor = g.strokeStyle;   //	Store the color to restore after painting the current step
 
             g.strokeStyle = `rgb(${curColor.r}, ${curColor.g}, ${curColor.b})`;
             g.beginPath();
-
-            if(this.nCurStep == this.steps)
-                g.moveTo(this.x, this.y);
-            else
-                g.moveTo(this.px, this.py);
-            g.lineTo(this.x, this.y);
-
+            g.moveTo(this.pt0.x, this.pt0.y);
+            g.lineTo(this.pt1.x, this.pt1.y);
             g.stroke();
 
             g.strokeStyle = oldColor;		//	Restore the old color
 
             //	Change the current state of the Oid
-            this.px = this.x;
-            this.py = this.y;
+            this.pt0 = this.pt1;
 
             this.phi += this.delphi;
             --this.nCurStep;
         }
     }
-    
+
+    _contains(pt) {
+        return false;
+    }
+
     contains(pt) {
-        return this._contains(this._transformScr2Oid(pt));
+        return this._contains(this._transformScr2Oid(new Vector(pt.x, pt.y)));
     }
 }

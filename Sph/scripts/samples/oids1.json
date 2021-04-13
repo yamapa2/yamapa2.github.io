@@ -1,6 +1,7 @@
     [
         {
-            "type": "EpiTrochoid",
+            "type": "Trochoid",
+            "hypo": false,
             "scale": 1,
             "locX": 500,
             "locY": 350,
@@ -11,7 +12,8 @@
             "color": { "r": 190, "g": 56, "b": 243 }
         },
         {
-            "type": "HypoTrochoid",
+            "type": "Trochoid",
+            "hypo": true,
             "scale": 1,
             "locX": 500,
             "locY": 350,
@@ -23,6 +25,7 @@
         },
         {
             "type": "Cycloid",
+            "hypo": false,
             "scale": 1,
             "locX": 160,
             "locY": 350,
@@ -35,6 +38,7 @@
         },
         {
             "type": "Cycloid",
+            "hypo": false,
             "scale": 1,
             "locX": 220,
             "locY": 350,
@@ -47,6 +51,7 @@
         },
         {
             "type": "Cycloid",
+            "hypo": false,
             "scale": 1,
             "locX": 780,
             "locY": 350,
@@ -59,6 +64,7 @@
         },
         {
             "type": "Cycloid",
+            "hypo": false,
             "scale": 1,
             "locX": 840,
             "locY": 350,
@@ -70,7 +76,8 @@
             "angle": 90
         },
         {
-            "type": "HypoTrochoid",
+            "type": "Trochoid",
+            "hypo": true,
             "locX": 500,
             "locY": 40,
             "scale": 1.6,
@@ -84,7 +91,8 @@
             "steps": 1090
         },
         {
-            "type": "HypoTrochoid",
+            "type": "Trochoid",
+            "hypo": true,
             "locX": 500,
             "locY": 40,
             "scale": 1.6,
@@ -98,7 +106,8 @@
             "steps": 1090
         },
         {
-            "type": "HypoTrochoid",
+            "type": "Trochoid",
+            "hypo": true,
             "locX": 500,
             "locY": 40,
             "scale": 1.6,
@@ -112,7 +121,8 @@
             "steps": 1090
         },
         {
-            "type": "HypoTrochoid",
+            "type": "Trochoid",
+            "hypo": true,
             "locX": 500,
             "locY": 660,
             "scale": 1.6,
@@ -126,7 +136,8 @@
             "steps": 1090
         },
         {
-            "type": "HypoTrochoid",
+            "type": "Trochoid",
+            "hypo": true,
             "locX": 500,
             "locY": 660,
             "scale": 1.6,
@@ -140,7 +151,8 @@
             "steps": 1090
         },
         {
-            "type": "HypoTrochoid",
+            "type": "Trochoid",
+            "hypo": true,
             "locX": 500,
             "locY": 660,
             "scale": 1.6,

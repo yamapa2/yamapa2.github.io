@@ -14,7 +14,6 @@ class Ellipsloid extends Oid {
         this.e = 0.0;
         this.ae = 0.0;
         this.ae2 = 0.0;
-        this.rbyslip = 0.0;
 	}
 
     fieldRequirements() {
@@ -29,7 +28,6 @@ class Ellipsloid extends Oid {
         this.e = (this.a ** 2 - this.b ** 2)/(2.0 * this.a ** 2);
         this.ae = this.a ** 2;
         this.ae2 = this.ae ** 2;
-        this.rbyslip = this.r / this.slip;
 
 		//	Computing the perimeter of the Ellipse, by approximating with arcs, of angle 0.5 degrees
         this.deltheta = 0.5 * Math.PI / 180.0;

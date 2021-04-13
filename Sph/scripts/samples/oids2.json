@@ -2,6 +2,7 @@
     {
         "id": 1,
         "type": "Polyloid",
+        "hypo": false,
         "locX": 500,
         "locY": 350,
         "scale": 0.3,
@@ -29,7 +30,8 @@
     },
     {
         "id": 2,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 590,
         "locY": 504,
         "scale": 0.4,
@@ -57,7 +59,8 @@
     },
     {
         "id": 3,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 591,
         "locY": 194,
         "scale": 0.4,
@@ -85,7 +88,8 @@
     },
     {
         "id": 4,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 319,
         "locY": 349,
         "scale": 0.4,
@@ -114,6 +118,7 @@
     {
         "id": 5,
         "type": "Polyloid",
+        "hypo": false,
         "locX": 500,
         "locY": 350,
         "scale": 0.5,

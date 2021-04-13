@@ -9,8 +9,6 @@
 <script src="scripts/core/Customoid.js"></script>
 <script src="scripts/core/Cycloid.js"></script>
 <script src="scripts/core/Trochoid.js"></script>
-<script src="scripts/core/EpiTrochoid.js"></script>
-<script src="scripts/core/HypoTrochoid.js"></script>
 <script src="scripts/core/Ellipsloid.js"></script>
 <script src="scripts/core/Polyloid.js"></script>
 <script src="scripts/core/Polaroid.js"></script>
@@ -72,13 +70,14 @@
                     <div class="config-col-widget">
                         <select id="typeselect" name="type" onchange="javascript:onOidTypeChanged(this.value)">
                             <option value="Cycloid">Cycloid</option>
-                            <option value="EpiTrochoid">EpiTrochoid</option>
-                            <option value="HypoTrochoid">HypoTrochoid</option>
+                            <option value="Trochoid">Trochoid</option>
                             <option value="Ellipsloid">Ellipsloid</option>
                             <option value="Polyloid">Polyloid</option>
                             <option value="Polaroid">Adv: Polaroid</option>
                             <option value="Cartisianoid">Adv: Cartisianoid</option>
                         </select>
+                        <label for="hypo">hypo:</label>
+                        <input type="checkbox" name="hypo" oninput="onOidUpdated()" onchange="onOidUpdated()"/>
                     </div>
                     <div class="config-col-value"></div>
                 </div>

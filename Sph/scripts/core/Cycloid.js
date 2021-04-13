@@ -3,7 +3,6 @@ class Cycloid extends Oid {
 		super();
 
 		this.length = 0;		//	Half of the length of the Generator line, length is Mandatory
-	    this.rbyslip = 0.0;
 	}
 
     fieldRequirements() {
@@ -14,8 +13,6 @@ class Cycloid extends Oid {
 	initialize() {
         super.initialize()
         
-		this.rbyslip = this.r / this.slip;
-
 		if(this.steps <= 0)
             this.steps = Math.round(2.0 * this.length * this.slip / (this.r * this.delphi));
 		
@@ -27,12 +24,12 @@ class Cycloid extends Oid {
 	_nextStep() {
         //	Compute the next point on the Oid
         let pt = new Vector(this.length - this.rbyslip * this.phi, this.r)
-            .minus(new Vector(this.s).rotate(this.phi));
+            .minus(new Vector(this.s).rotate(this.hypo ? -this.phi : this.phi));
 
         return { pt: pt, gf: Math.abs(pt.y) };
     }
     
     _contains(pt) {
-        return (-this.length <= pt.x && pt.x <= this.length && this.r-this.s <= pt.y && pt.y < this.r+this.s);
+        return (-this.length <= pt.y && pt.y <= this.length && this.r-this.s <= pt.x && pt.x < this.r+this.s);
     }
 }

@@ -1,14 +1,15 @@
 //  Default Oid Configuration, used when a new Oid is added
 var sampleOidConfig = {
     id: 1,
-    type: "HypoTrochoid",
+    type: "Trochoid",
+    hypo: true,
     scale: 1,
     locX: 500,
     locY: 350,
     angle: 0,
-    a: 146,
+    a: 232,
     r: 20,
-    s: 120,
+    s: 50,
     rdef: "200*Math.sin(3*t)",
     xdef: "t",
     ydef: "0",
@@ -88,6 +89,7 @@ class OidView {
                     break;
                 //  Boolean fields
                 case 'grad':
+                case 'hypo':
                     this.oidConfig[field.name] = field.checked;
                     break;
                 //  String fields
@@ -136,6 +138,7 @@ class OidView {
                         break;
                     //  Boolean fields
                     case 'grad':
+                    case 'hypo':
                         form[field].checked = oidConfigValues[field];
                         break;
                     //  Rest are all numeric and string fields
@@ -233,7 +236,7 @@ class OidView {
     trimOidConfig() {
         let oidClass = (Function('return ' + this.oidConfig.type))();
         let fields = (new oidClass).fieldRequirements();
-        fields = [...fields.mandatory, ...fields.optional];
+        fields = [...fields.mandatory, ...fields.optional, ...[ "type", "id"]];
 
         let trimmedOidConfig = {};
         for(let field of fields)

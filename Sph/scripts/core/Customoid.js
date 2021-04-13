@@ -7,9 +7,6 @@ class Customoid extends Oid {
 
         //	Oid state variables
         this.segment = null;    //  Current segment being processed - captures from, to, length and dir
-
-        //	Pre-computed values to increase the speed
-        this.rdelphi = this.r * this.delphi;
     }
 
     createSegment(from, to) {
@@ -23,8 +20,6 @@ class Customoid extends Oid {
 	initialize() {
         super.initialize();
         this.generator.initialize();
-
-        this.rdelphi = this.r * this.delphi;
 
 		//	If number of steps are not specified, take it as 50000
 		if(this.steps <= 0)
@@ -73,9 +68,18 @@ class Customoid extends Oid {
 		}
 
 		//	Compute the next point on the Oid
-        let pt = this.contact
-            .plus(this.segment.normal.scale(this.r))
-            .plus(this.segment.normal.scale(this.s).rotate(this.phi * this.slip + Math.PI));
+        let pt;
+        if(this.hypo) {
+            //  Generator circle runs under the curve in clockwise direction
+            pt = this.contact
+                .minus(this.segment.normal.scale(this.r))
+                .plus(this.segment.normal.scale(this.s).rotate(-this.phi * this.slip - Math.PI));
+        } else {
+            //  Generator circle runs over the curve in counter-clockwise direction
+            pt = this.contact
+                .plus(this.segment.normal.scale(this.r))
+                .plus(this.segment.normal.scale(this.s).rotate(this.phi * this.slip + Math.PI));
+        }
 
 		return { pt: pt, gf: pt.magnitude() };
 	}

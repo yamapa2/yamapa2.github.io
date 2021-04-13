@@ -1,6 +1,7 @@
 [
     {
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "scale": 0.5,
         "locX": 200,
         "locY": 150,
@@ -10,7 +11,8 @@
         "color":{ "r": 255, "g": 0, "b": 0 }
     },
     {
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "scale": 0.5,
         "locX": 200,
         "locY": 550,
@@ -20,7 +22,8 @@
         "color":{ "r": 255, "g": 0, "b": 0 }
     },
     {
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "scale": 0.5,
         "locX": 800,
         "locY": 150,
@@ -30,7 +33,8 @@
         "color":{ "r": 255, "g": 0, "b": 0 }
     },
     {
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "scale": 0.5,
         "locX": 800,
         "locY": 550,
@@ -40,7 +44,8 @@
         "color":{ "r": 255, "g": 0, "b": 0 }
     },
     {
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "scale": 0.5,
         "locX": 500,
         "locY": 350,
@@ -49,7 +54,8 @@
         "color":{ "r": 255, "g": 148, "b": 0 }
     },
     {
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "scale": 0.3,
         "locX": 500,
         "locY": 350,
@@ -58,7 +64,8 @@
         "color":{ "r": 0, "g": 148, "b": 255 }
     },
     {
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "scale": 0.7,
         "locX": 500,
         "locY": 350,
@@ -67,7 +74,8 @@
         "color":{ "r": 128, "g": 128, "b": 128 }
     },
     {
-        "type": "EpiTrochoid",
+        "type": "Trochoid",
+        "hypo": false,
         "scale": 0.8,
         "locX": 500,
         "locY": 350,
@@ -76,7 +84,8 @@
         "color":{ "r": 0, "g": 255, "b": 0 }
     },
     {
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 500,
         "locY": 350,
         "scale": 1,
@@ -86,7 +95,8 @@
         "color": { "r": 0, "g": 0, "b": 0 }
     },
     {
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 500,
         "locY": 350,
         "scale": 0.3,

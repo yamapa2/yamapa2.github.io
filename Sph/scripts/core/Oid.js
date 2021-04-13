@@ -19,6 +19,7 @@ class Oid {
         //	Generator circle parameters
         this.r = this.s = 0;		//	Generator circle radius and distance between center of the generator
                                     //	circle and the generator point, r is Mandatory
+        this.hypo = true;           //  True if generator circle runs under the curve in clockwise direction
         
         //	Oid parameters
         this.delphi = 5;                        //	Paint resolution, 5 degrees default resolution
@@ -41,12 +42,14 @@ class Oid {
     
         //	Pre-computed values to increase the speed
         this.cosAngle = this.sinAngle = 0;
+		this.rbyslip = 1;
+        this.rdelphi = 0;
     }
 
     fieldRequirements() {
         return {
             mandatory: [ "r" ],
-            optional: [ "s", "locX", "locY", "scale", "angle", "slip", "delphi", "steps", "color", "bgcolor", "grad" ]
+            optional: [ "s", "hypo", "locX", "locY", "scale", "angle", "slip", "delphi", "steps", "color", "bgcolor", "grad" ]
         };
     }
 
@@ -59,9 +62,11 @@ class Oid {
         this.angle *= Math.PI / 180;
         
         //	Pre-computed values to increase the speed
+        this.center = new Vector(this.locX, this.locY);
         this.cosAngle = Math.cos(this.angle);
         this.sinAngle = Math.sin(this.angle);
-        this.center = new Vector(this.locX, this.locY);
+        this.rbyslip = this.r / this.slip;
+        this.rdelphi = this.r * this.delphi;
     }
 
     reset() {

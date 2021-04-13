@@ -1,7 +1,8 @@
 [
     {
         "id": 1,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 500,
         "locY": 350,
         "scale": 1.9,
@@ -31,6 +32,7 @@
     {
         "id": 2,
         "type": "Polyloid",
+        "hypo": false,
         "locX": 500,
         "locY": 350,
         "scale": 0.4,
@@ -60,6 +62,7 @@
     {
         "id": 3,
         "type": "Polyloid",
+        "hypo": false,
         "locX": 500,
         "locY": 350,
         "scale": 0.7,
@@ -88,7 +91,8 @@
     },
     {
         "id": 4,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 725,
         "locY": 125,
         "scale": 0.5,
@@ -117,7 +121,8 @@
     },
     {
         "id": 5,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 725,
         "locY": 573,
         "scale": 0.5,
@@ -146,7 +151,8 @@
     },
     {
         "id": 6,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 277,
         "locY": 573,
         "scale": 0.5,
@@ -175,7 +181,8 @@
     },
     {
         "id": 7,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 278,
         "locY": 129,
         "scale": 0.5,
@@ -204,7 +211,8 @@
     },
     {
         "id": 8,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 500,
         "locY": 350,
         "scale": 0.4,
@@ -233,7 +241,8 @@
     },
     {
         "id": 9,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 500,
         "locY": 350,
         "scale": 0.7,
@@ -262,7 +271,8 @@
     },
     {
         "id": 10,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 154,
         "locY": 246,
         "scale": 0.3,
@@ -291,7 +301,8 @@
     },
     {
         "id": 11,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 125,
         "locY": 350,
         "scale": 0.2,
@@ -320,7 +331,8 @@
     },
     {
         "id": 12,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 155,
         "locY": 454,
         "scale": 0.3,
@@ -349,7 +361,8 @@
     },
     {
         "id": 13,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 847,
         "locY": 244,
         "scale": 0.3,
@@ -378,7 +391,8 @@
     },
     {
         "id": 14,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 845,
         "locY": 453,
         "scale": 0.3,
@@ -407,7 +421,8 @@
     },
     {
         "id": 15,
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 878,
         "locY": 350,
         "scale": 0.2,

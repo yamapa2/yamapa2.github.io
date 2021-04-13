@@ -48,7 +48,8 @@
         "grad": true
     },
     {
-        "type": "HypoTrochoid",
+        "type": "Trochoid",
+        "hypo": true,
         "locX": 500,
         "locY": 350,
         "scale": 0.5,
